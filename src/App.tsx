@@ -1,12 +1,14 @@
-import './App.css'
+import './App.css';
+import AppNavigation from './component/AppNavigation.tsx';
+import { Outlet } from 'react-router-dom';
 
 function App() {
-
   return (
     <>
-        <h1>Root Route: App</h1>
+      <AppNavigation />
+      <Outlet />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
