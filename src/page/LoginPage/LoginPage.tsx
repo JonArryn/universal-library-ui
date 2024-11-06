@@ -34,9 +34,9 @@ const LoginPage = () => {
     try {
       await libraryApi.get('/sanctum/csrf-cookie');
       await libraryApi.post('/login', data);
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        const responseData = error.response?.data as LoginErrorResponseData;
+    } catch (e: unknown) {
+      if (e instanceof AxiosError) {
+        const responseData = e.response?.data as LoginErrorResponseData;
         if (responseData?.errors.email) {
           setError('email', {
             type: 'custom',

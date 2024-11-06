@@ -6,7 +6,9 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginPage from './page/LoginPage/LoginPage.tsx';
 import HomePage from './page/HomePage.tsx';
-import RegisterPage from './page/RegisterPage.tsx';
+import RegisterPage from './page/RegisterPage/RegisterPage.tsx';
+import AppPage from './app/AppPage.tsx';
+import LibrariesPage from './app/page/LibrariesPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,16 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <LoginPage />,
+      },
+    ],
+  },
+  {
+    path: '/app',
+    element: <AppPage />,
+    children: [
+      {
+        path: '/app/dashboard',
+        element: <LibrariesPage />,
       },
     ],
   },

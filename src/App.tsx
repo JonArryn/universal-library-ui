@@ -1,11 +1,11 @@
 import './App.css';
-import AppNavigation from './component/AppNavigation.tsx';
+import HomeNavigation from './component/HomeNavigation.tsx';
 import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
     <>
-      <AppNavigation />
+      <HomeNavigation />
       <Outlet />
     </>
   );

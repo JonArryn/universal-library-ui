@@ -1,14 +1,14 @@
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
-import { NavLink } from 'react-router-dom';
-import { BsFillMoonStarsFill } from 'react-icons/bs';
+import Stack from 'react-bootstrap/Stack';
 import { ImLibrary } from 'react-icons/im';
 import Nav from 'react-bootstrap/Nav';
-import Stack from 'react-bootstrap/Stack';
+import { NavLink } from 'react-router-dom';
+import { BsFillMoonStarsFill } from 'react-icons/bs';
 
 const AppNavigation = () => {
   return (
-    <Navbar className="bg-body-tertiary">
+    <Navbar bg="dark" data-bs-theme="dark">
       <Container className="overflow-visible py-1">
         <Navbar.Brand href="#home">
           <Stack direction="horizontal" gap={2}>
@@ -16,14 +16,14 @@ const AppNavigation = () => {
           </Stack>
         </Navbar.Brand>
         <Nav className="me-auto">
-          <NavLink to="/" className="nav-link">
-            Home
+          <NavLink to="/app/dashboard" className="nav-link">
+            Libraries
           </NavLink>
         </Nav>
         <Nav>
           <Stack direction="horizontal">
-            <NavLink to="/login" className="nav-link ms-auto">
-              Login
+            <NavLink to="/logout" className="nav-link ms-auto">
+              Logout
             </NavLink>
             <BsFillMoonStarsFill />
           </Stack>
