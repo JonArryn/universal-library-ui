@@ -1,7 +1,8 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../Hooks/useAuth.tsx';
+import useAuth from '../hooks/useAuth.tsx';
 import { ICredentials } from '../contexts/AuthContext.tsx';
+import { useEffect } from 'react';
 
 type Inputs = {
     email: string;
@@ -9,7 +10,7 @@ type Inputs = {
 };
 
 const LoginPage = function () {
-    const { login } = useAuth();
+    const { login, isSessionActive } = useAuth();
     const navigate = useNavigate();
     const {
         register,
@@ -24,6 +25,20 @@ const LoginPage = function () {
             navigate('/app');
         }
     };
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            console.log('LoginPage.tsx uE fired');
+            const active = await isSessionActive();
+            if (active) {
+                navigate('/app');
+            } else {
+                console.log('Session is inactive or user not authenticated');
+            }
+        };
+
+        checkAuth();
+    }, [isSessionActive, navigate]);
 
     const onSubmit: SubmitHandler<Inputs> = (data) => handleLogin(data);
 

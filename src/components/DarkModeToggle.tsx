@@ -4,7 +4,7 @@ import { FaSun } from 'react-icons/fa6';
 import { FaRegSun } from 'react-icons/fa';
 import { FaToggleOn } from 'react-icons/fa';
 import { BsMoonStars } from 'react-icons/bs';
-import { useDarkModeContext } from '../Hooks/useDarkModeContext.ts';
+import { useDarkModeContext } from '../hooks/useDarkModeContext.ts';
 
 const DarkModeToggle = () => {
     const { toggleDarkMode, isDarkMode } = useDarkModeContext();

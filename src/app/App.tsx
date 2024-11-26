@@ -1,5 +1,5 @@
 import { Outlet, Navigate } from 'react-router-dom';
-import useAuth from '../Hooks/useAuth.tsx';
+import useAuth from '../hooks/useAuth.tsx';
 
 const App = function () {
     const { isAuthenticated } = useAuth();

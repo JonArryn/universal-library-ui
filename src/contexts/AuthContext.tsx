@@ -16,6 +16,7 @@ export type TypeAuthContext = {
     user?: IUser;
     login: (credentials: ICredentials) => Promise<boolean>;
     logout: () => Promise<void>;
+    isSessionActive: () => Promise<boolean>;
 };
 
 const AuthContext = createContext<TypeAuthContext | undefined>(undefined);

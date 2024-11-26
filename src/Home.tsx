@@ -3,8 +3,12 @@ import TopNav from './components/topNav/TopNav.tsx';
 import { Outlet } from 'react-router-dom';
 import Heading from './components/Heading.tsx';
 import { useEffect } from 'react';
+import useAuth from './hooks/useAuth.tsx';
 
 function Home() {
+    const { isSessionActive } = useAuth();
+
+    // for tailwind
     useEffect(() => {
         const htmlElement = document.documentElement; // Access the <html> element
         const bodyElement = document.querySelector('body');
@@ -13,6 +17,14 @@ function Home() {
         htmlElement.classList.add('bg-gray-100');
         bodyElement?.classList.add('h-full');
     }, []); // Runs once when the app first renders
+
+    useEffect(() => {
+        const checkAuth = async function () {
+            await isSessionActive();
+        };
+        checkAuth();
+    }, []);
+
     return (
         <>
             <div className="min-h-full">
