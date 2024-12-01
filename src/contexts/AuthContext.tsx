@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { IApiErrorResponse, IApiOkResponse } from '../api/apiService.ts';
 
 export interface ICredentials {
     email: string;
@@ -14,7 +15,9 @@ export interface IUser {
 export type TypeAuthContext = {
     isAuthenticated?: boolean;
     user?: IUser;
-    login: (credentials: ICredentials) => Promise<boolean>;
+    login: (
+        credentials: ICredentials
+    ) => Promise<IApiOkResponse | IApiErrorResponse>;
     logout: () => Promise<void>;
     isSessionActive: () => Promise<boolean>;
 };

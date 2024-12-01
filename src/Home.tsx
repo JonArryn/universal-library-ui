@@ -1,5 +1,5 @@
 import './Home.css';
-import TopNav from './components/topNav/TopNav.tsx';
+import TopNav from './components/TopNav/TopNav.tsx';
 import { Outlet } from 'react-router-dom';
 import Heading from './components/Heading.tsx';
 import { useEffect } from 'react';

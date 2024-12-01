@@ -1,26 +1,31 @@
 import AuthContext, { IUser, ICredentials } from '../contexts/AuthContext.tsx';
 import React, { useEffect, useState } from 'react';
-import apiService from '../api/apiService.ts';
+import apiService, { IApiOkResponse } from '../api/apiService.ts';
 
 interface IAuthProviderProps {
     children?: React.ReactNode;
+}
+
+export interface ILoginCredentials {
+    email: string;
+    password: string;
 }
 
 const AuthProvider = function ({ children }: IAuthProviderProps) {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [user, setUser] = useState<IUser | undefined>(undefined);
 
-    const login = async function (credentials: ICredentials): Promise<boolean> {
-        try {
-            await apiService.get('/sanctum/csrf-cookie');
-            await apiService.post('/api/login', credentials);
+    const login = async function (
+        credentials: ICredentials
+    ): Promise<IApiOkResponse> {
+        await apiService.get('/sanctum/csrf-cookie');
+        const response = await apiService.post('/api/login', credentials);
+        const loginResponseData: IApiOkResponse = response.data;
+        if (loginResponseData.status === 200) {
             setIsAuthenticated(true);
             await getUser();
-
-            return true;
-        } catch (error: unknown) {
-            return false;
         }
+        return loginResponseData;
     };
 
     const logout = async function () {
@@ -35,10 +40,15 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
             setIsAuthenticated(false);
             setUser(undefined);
             return false;
+        } else {
+            if (!isAuthenticated) {
+                setIsAuthenticated(true);
+            }
+            if (!user) {
+                setUser(user);
+            }
+            return true;
         }
-        setIsAuthenticated(true);
-        setUser(user);
-        return true;
     };
 
     const getUser = async function () {
@@ -46,8 +56,9 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
             const userResponse = await apiService.get('/api/user');
             const userData: IUser = userResponse.data;
             return userData;
-        } catch (error) {
-            return undefined;
+        } catch (error: unknown) {
+            // TODO: Better handle errors in AuthProvider getUser function
+            console.log(error);
         }
     };
 

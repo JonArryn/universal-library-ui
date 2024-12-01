@@ -3,7 +3,7 @@ import './index.css';
 import Home from './Home.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AppProvider from './providers/AppProvider.tsx';
-import LoginPage from './pages/LoginPage.tsx';
+import LoginPage from './pages/LoginPage/LoginPage.tsx';
 import DashboardPage from './app/DashboardPage.tsx';
 import App from './app/App.tsx';
 
