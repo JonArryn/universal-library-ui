@@ -6,6 +6,7 @@ import AppProvider from './providers/AppProvider.tsx';
 import LoginPage from './pages/LoginPage/LoginPage.tsx';
 import DashboardPage from './app/DashboardPage.tsx';
 import App from './app/App.tsx';
+import RegisterPage from './pages/RegisterPage/RegisterPage.tsx';
 
 const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <LoginPage />,
+            },
+            {
+                path: '/register',
+                element: <RegisterPage />,
             },
         ],
     },

@@ -1,7 +1,7 @@
 import MobileProfileMenu from './components/MobileProfileMenu.tsx';
 import MobileNav from './components/MobileNav.tsx';
 import MobileMenuButton from './components/MobileMenuButton.tsx';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth.tsx';
 import { CgProfile } from 'react-icons/cg';
 import NavigationLink from './components/NavigationLink.tsx';
@@ -14,10 +14,12 @@ const TopNav = () => {
     const LoginLinks = function () {
         return (
             <div className="flex gap-3">
-                <NavLink to={'/login'}>
+                <Link to={'/login'}>
                     <button className="text-slate-50">Login</button>
-                </NavLink>
-                <button className="text-slate-50">Sign Up</button>
+                </Link>
+                <Link to={'/register'} className="text-slate-50">
+                    Sign Up
+                </Link>
             </div>
         );
     };

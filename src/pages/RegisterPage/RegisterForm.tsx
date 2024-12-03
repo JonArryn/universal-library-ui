@@ -1,33 +1,35 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import FormWrapper from '../../components/form/FormWrapper.tsx';
 import useAuth from '../../hooks/useAuth.tsx';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { IRegisterUserData } from '../../providers/AuthProvider.tsx';
+import FormWrapper from '../../components/form/FormWrapper.tsx';
 import FormTextInputGroup from '../../components/form/FormTextInputGroup.tsx';
 import FormSubmitButton from '../../components/form/FormSubmitButton.tsx';
-import { AxiosError } from 'axios';
-import { ILoginCredentials } from '../../providers/AuthProvider.tsx';
 import FormError from '../../components/form/FormError.tsx';
+import { AxiosError } from 'axios';
 
-interface Inputs extends ILoginCredentials {
+interface Inputs extends IRegisterUserData {
     root?: { message: string };
     generic?: string;
 }
 
-const LoginForm = () => {
+function RegisterForm() {
     const methods = useForm<Inputs>();
-    const { login } = useAuth();
+    const { register } = useAuth();
     const navigate = useNavigate();
 
-    const handleLogin: SubmitHandler<Inputs> = async (data: Inputs) => {
+    const handleRegister: SubmitHandler<Inputs> = async function (formData) {
         try {
             methods.clearErrors('generic');
-            await login(data);
+            await register(formData);
             navigate('/app');
         } catch (error: unknown) {
             if (error instanceof AxiosError) {
                 if (error.status && error.status >= 400 && error.status < 500) {
                     const errorData = error?.response?.data;
-                    const formFields = Object.keys(data) as Array<keyof Inputs>;
+                    const formFields = Object.keys(formData) as Array<
+                        keyof Inputs
+                    >;
                     const errorField = formFields.find(
                         (fieldName) => fieldName in errorData.errors
                     );
@@ -45,19 +47,24 @@ const LoginForm = () => {
             }
         }
     };
-
     return (
         <>
             <FormProvider {...methods}>
-                <FormWrapper title={'Sign In To Your Account'}>
+                <FormWrapper title={'Create an Account'}>
                     <form
                         className="space-y-6"
-                        onSubmit={methods.handleSubmit(handleLogin)}
+                        onSubmit={methods.handleSubmit(handleRegister)}
                     >
                         <FormTextInputGroup
+                            name={'name'}
+                            label={'Name'}
+                            type={'text'}
+                            required={true}
+                        />
+                        <FormTextInputGroup
                             name={'email'}
+                            label={'Email Address'}
                             type={'email'}
-                            label={'Email'}
                             required={true}
                         />
                         <FormTextInputGroup
@@ -65,25 +72,29 @@ const LoginForm = () => {
                             label={'Password'}
                             type={'password'}
                             required={true}
-                            subText={'Forgot Password?'}
-                            subTextRoute={'/forgot-password'}
                         />
-                        <FormSubmitButton submitButtonText={'Sign In'} />
+                        <FormTextInputGroup
+                            name={'password_confirmation'}
+                            label={'Confirm Password'}
+                            type={'password'}
+                            required={true}
+                        />
+                        <FormSubmitButton submitButtonText={'Register'} />
                         <FormError fieldName={'generic'} />
                     </form>
                     <p className="mt-10 text-center text-sm/6 text-gray-500 dark:text-slate-50">
-                        Don't Have an Account?{' '}
-                        <NavLink
-                            to={'/register'}
+                        Already Have an Account?{' '}
+                        <Link
+                            to={'/login'}
                             className="font-semibold text-indigo-600 hover:text-indigo-500"
                         >
-                            Register Today
-                        </NavLink>
+                            Log In
+                        </Link>
                     </p>
                 </FormWrapper>
             </FormProvider>
         </>
     );
-};
+}
 
-export default LoginForm;
+export default RegisterForm;

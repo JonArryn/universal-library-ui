@@ -4,16 +4,16 @@ import FormError from './FormError.tsx';
 type InputTypes = 'text' | 'email' | 'password' | 'tel';
 
 interface IFormInputProps {
-    name: string; // The name of the input field
-    label: string; // Label for the input
-    type: InputTypes; // Input type (default: text)
+    name: string;
+    label: string;
+    type: InputTypes;
     required?: boolean;
-    placeholder?: string; // Placeholder text
+    placeholder?: string;
     subText?: string;
     subTextRoute?: string;
 }
 
-function FormInput({
+function FormTextInputGroup({
     name,
     label,
     type = 'text',
@@ -71,4 +71,4 @@ function FormInput({
     );
 }
 
-export default FormInput;
+export default FormTextInputGroup;

@@ -11,9 +11,30 @@ export interface ILoginCredentials {
     password: string;
 }
 
+export interface IRegisterUserData {
+    name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+    root?: { message: string };
+    generic?: string;
+}
+
 const AuthProvider = function ({ children }: IAuthProviderProps) {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [user, setUser] = useState<IUser | undefined>(undefined);
+
+    const register = async function (formData: IRegisterUserData) {
+        await apiService.get('/sanctum/csrf-cookie');
+        const response = await apiService.post('/api/register', formData);
+        const registerResponseData: IApiOkResponse = response.data;
+        if (registerResponseData.status === 201) {
+            setIsAuthenticated(true);
+            setUser(registerResponseData.data.user);
+        }
+        console.log(response);
+        return registerResponseData;
+    };
 
     const login = async function (
         credentials: ICredentials
@@ -82,6 +103,7 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
                 isAuthenticated,
                 user,
                 login,
+                register,
                 logout,
                 isSessionActive,
             }}

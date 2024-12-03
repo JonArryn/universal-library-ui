@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { IApiErrorResponse, IApiOkResponse } from '../api/apiService.ts';
+import { IRegisterUserData } from '../providers/AuthProvider.tsx';
 
 export interface ICredentials {
     email: string;
@@ -7,6 +8,7 @@ export interface ICredentials {
 }
 
 export interface IUser {
+    type: 'user';
     id: number;
     name: string;
     email: string;
@@ -17,6 +19,9 @@ export type TypeAuthContext = {
     user?: IUser;
     login: (
         credentials: ICredentials
+    ) => Promise<IApiOkResponse | IApiErrorResponse>;
+    register: (
+        formData: IRegisterUserData
     ) => Promise<IApiOkResponse | IApiErrorResponse>;
     logout: () => Promise<void>;
     isSessionActive: () => Promise<boolean>;

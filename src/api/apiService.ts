@@ -4,7 +4,7 @@ import { AxiosInstance } from 'axios';
 export interface IApiOkResponse {
     message: string;
     status: number;
-    data: [];
+    data: { [key: string]: never };
 }
 
 export interface IApiErrorResponse {
@@ -13,7 +13,7 @@ export interface IApiErrorResponse {
     message: string;
 }
 
-export interface ValidationErrorApiResponse {
+export interface IApiValidationErrorResponse {
     errors: {
         [key: string]: string[];
     };
