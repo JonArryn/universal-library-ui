@@ -8,12 +8,17 @@ import DashboardPage from './app/DashboardPage.tsx';
 import App from './app/App.tsx';
 import RegisterPage from './pages/RegisterPage/RegisterPage.tsx';
 import LogOutPage from './pages/LogOutPage.tsx';
+import HomePage from './pages/HomePage.tsx';
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Home />,
         children: [
+            {
+                path: '/',
+                element: <HomePage />,
+            },
             {
                 path: '/login',
                 element: <LoginPage />,

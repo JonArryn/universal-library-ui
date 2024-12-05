@@ -8,6 +8,7 @@ import NavigationLink from './components/NavigationLink.tsx';
 import StyledButton from '../StyledButton.tsx';
 import ProfileDropdown from './components/ProfileDropdown.tsx';
 import { useEffect, useRef, useState } from 'react';
+import publicNavItems from './publicNavItems.ts';
 
 const TopNav = () => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -88,11 +89,13 @@ const TopNav = () => {
                         {/* Nav Links */}
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
-                                <NavigationLink path={'/'} text={'Home'} />
-                                <NavigationLink
-                                    path={'/about'}
-                                    text={'About'}
-                                />
+                                {publicNavItems.map((item) => (
+                                    <NavigationLink
+                                        path={item.route}
+                                        text={item.navText}
+                                        key={item.route}
+                                    />
+                                ))}
                             </div>
                         </div>
                     </div>
