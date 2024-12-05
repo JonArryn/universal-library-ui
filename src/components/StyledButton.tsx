@@ -3,7 +3,7 @@ import React from 'react';
 interface IProps {
     Icon?: React.ReactNode;
     text?: string;
-    handleClick: () => void;
+    handleClick?: () => void;
     style?: 'secondary' | 'primary' | 'danger';
 }
 
@@ -26,12 +26,15 @@ const styles = {
 const StyledButton = ({ Icon, text, handleClick, style }: IProps) => {
     return (
         <button
-            className={`${style ? styles[style].join(' ') : styles.primary.join(' ')} inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset`}
-            onClick={handleClick}
+            className={`${style ? styles[style].join(' ') : styles.primary.join(' ')} inline-flex items-center rounded-xl px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset`}
+            onClick={(e) => {
+                e.stopPropagation();
+                if (handleClick) handleClick();
+            }}
         >
             {Icon && (
-                <div className="size-5 items-center overflow-visible text-2xl">
-                    {Icon}
+                <div className="flex items-center justify-center text-2xl">
+                    <span className={'text-center align-middle'}>{Icon}</span>
                 </div>
             )}
             {text}

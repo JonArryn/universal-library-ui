@@ -6,10 +6,40 @@ import useAuth from '../../hooks/useAuth.tsx';
 import { CgProfile } from 'react-icons/cg';
 import NavigationLink from './components/NavigationLink.tsx';
 import StyledButton from '../StyledButton.tsx';
+import ProfileDropdown from './components/ProfileDropdown.tsx';
+import { useEffect, useRef, useState } from 'react';
 
 const TopNav = () => {
+    const [menuOpen, setMenuOpen] = useState<boolean>(false);
+
+    const menuRef = useRef<HTMLDivElement>(null);
+
     const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
+
+    const toggleMenu = function () {
+        setMenuOpen((prev) => !prev); // Toggle the menu on button click
+    };
+
+    const handleClickOutside = function (event: MouseEvent) {
+        // Close the menu if clicking outside of it
+        if (
+            menuRef.current &&
+            !menuRef.current.contains(event.target as Node)
+        ) {
+            setMenuOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        // Add event listener for clicks outside the menu
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            // Cleanup event listener on component unmount
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
     const LoginLinks = function () {
         return (
@@ -32,10 +62,12 @@ const TopNav = () => {
                     style={'secondary'}
                     handleClick={() => navigate('/app')}
                 />
-                <StyledButton
-                    Icon={<CgProfile />}
-                    handleClick={() => navigate('/profile')}
-                />
+                <div>
+                    <StyledButton
+                        Icon={<CgProfile />}
+                        handleClick={toggleMenu}
+                    />
+                </div>
             </div>
         );
     };
@@ -68,6 +100,11 @@ const TopNav = () => {
                     {/* Nav Right Menu */}
                     <MobileMenuButton />
                 </div>
+                {menuOpen && (
+                    <div ref={menuRef}>
+                        <ProfileDropdown />
+                    </div>
+                )}
             </div>
             {/*/*<!-- Mobile menu, show/hide based on menu state. -->*/}
             {/* Mobile Menu */}

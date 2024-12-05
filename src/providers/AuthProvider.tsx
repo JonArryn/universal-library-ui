@@ -50,7 +50,8 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
     };
 
     const logout = async function () {
-        await apiService.post('/api/logout');
+        const logoutResponse = await apiService.post('/api/logout');
+        console.log(logoutResponse);
         setIsAuthenticated(false);
         setUser(undefined);
     };

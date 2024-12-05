@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage/LoginPage.tsx';
 import DashboardPage from './app/DashboardPage.tsx';
 import App from './app/App.tsx';
 import RegisterPage from './pages/RegisterPage/RegisterPage.tsx';
+import LogOutPage from './pages/LogOutPage.tsx';
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
                 path: '/register',
                 element: <RegisterPage />,
             },
+            { path: '/logout', element: <LogOutPage /> },
         ],
     },
     {
