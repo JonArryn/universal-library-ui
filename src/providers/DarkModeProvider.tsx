@@ -9,20 +9,25 @@ interface IDarkModeProviderProps {
 }
 
 const DarkModeProvider = ({ children }: IDarkModeProviderProps) => {
-    const [isDarkMode, setIsDarkMode] = useState<TypeIsDarkMode>(true);
+    const [isDarkMode, setIsDarkMode] = useState<TypeIsDarkMode>(() => {
+        const storedPreference = localStorage.getItem('isDarkMode');
+        return storedPreference ? JSON.parse(storedPreference) : true;
+    });
     const toggleDarkMode = () => {
         setIsDarkMode(!isDarkMode);
     };
     useEffect(() => {
-        const htmlElement = document.documentElement; // Access the <html> element
+        localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+
+        const htmlElement = document.documentElement;
         const bodyElement = document.querySelector('body');
+        bodyElement?.classList.add('transition');
+        bodyElement?.classList.add('duration-300');
         if (isDarkMode) {
-            bodyElement?.classList.add('transition');
-            bodyElement?.classList.add('duration-300');
             bodyElement?.classList.add('dark:bg-slate-950');
-            htmlElement.classList.add('dark'); // Append the "dark" class
+            htmlElement.classList.add('dark');
         } else {
-            htmlElement.classList.remove('dark'); // Remove the "dark" class
+            htmlElement.classList.remove('dark');
         }
     }, [isDarkMode]); // Runs whenever isDarkMode changes
     return (
