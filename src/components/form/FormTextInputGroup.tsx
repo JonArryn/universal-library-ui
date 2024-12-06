@@ -22,7 +22,7 @@ function FormTextInputGroup({
     subText = '',
     subTextRoute = '',
 }: IFormInputProps) {
-    const { register } = useFormContext(); // Access form context
+    const { register, clearErrors } = useFormContext(); // Access form context
 
     const SubTextField = function () {
         return (
@@ -62,6 +62,7 @@ function FormTextInputGroup({
                     placeholder={placeholder}
                     {...register(name, { required: required })}
                     className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                    onChange={() => clearErrors('generic')}
                 />
             </div>
             <div className="mt-2 text-sm">

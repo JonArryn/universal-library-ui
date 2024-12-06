@@ -9,7 +9,7 @@ export interface IApiOkResponse {
 
 export interface IApiErrorResponse {
     status: number;
-    errors: [generic: string];
+    errors: { [key: string]: string[] };
     message: string;
 }
 

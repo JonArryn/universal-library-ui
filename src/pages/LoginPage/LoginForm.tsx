@@ -5,42 +5,31 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import FormTextInputGroup from '../../components/form/FormTextInputGroup.tsx';
 import FormSubmitButton from '../../components/form/FormSubmitButton.tsx';
 import { AxiosError } from 'axios';
-import { ILoginCredentials } from '../../providers/AuthProvider.tsx';
-import FormError from '../../components/form/FormError.tsx';
+import { FormInputs } from '../../components/form/FormWrapper.tsx';
 
-interface Inputs extends ILoginCredentials {
-    root?: { message: string };
-    generic?: string;
+interface ILoginCredentials extends FormInputs {
+    email: string;
+    password: string;
 }
 
 const LoginForm = () => {
-    const methods = useForm<Inputs>();
+    const methods = useForm<ILoginCredentials>();
+
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const handleLogin: SubmitHandler<Inputs> = async (data: Inputs) => {
+    const handleLogin: SubmitHandler<ILoginCredentials> = async (
+        formData: ILoginCredentials
+    ) => {
         try {
-            methods.clearErrors('generic');
-            await login(data);
+            await login(formData);
             navigate('/app');
         } catch (error: unknown) {
             if (error instanceof AxiosError) {
                 if (error.status && error.status >= 400 && error.status < 500) {
-                    const errorData = error?.response?.data;
-                    const formFields = Object.keys(data) as Array<keyof Inputs>;
-                    const errorField = formFields.find(
-                        (fieldName) => fieldName in errorData.errors
-                    );
-                    if (errorField) {
-                        methods.setError(errorField, {
-                            message: errorData.message,
-                        });
-                    } else {
-                        methods.setError('generic', {
-                            type: 'custom',
-                            message: errorData.message,
-                        });
-                    }
+                    methods.setError('generic', {
+                        message: 'Could not log in.',
+                    });
                 }
             }
         }
@@ -49,38 +38,36 @@ const LoginForm = () => {
     return (
         <>
             <FormProvider {...methods}>
-                <FormWrapper title={'Sign In To Your Account'}>
-                    <form
-                        className="space-y-6"
-                        onSubmit={methods.handleSubmit(handleLogin)}
-                    >
-                        <FormTextInputGroup
-                            name={'email'}
-                            type={'email'}
-                            label={'Email'}
-                            required={true}
-                        />
-                        <FormTextInputGroup
-                            name={'password'}
-                            label={'Password'}
-                            type={'password'}
-                            required={true}
-                            subText={'Forgot Password?'}
-                            subTextRoute={'/forgot-password'}
-                        />
-                        <FormSubmitButton submitButtonText={'Sign In'} />
-                        <FormError fieldName={'generic'} />
-                    </form>
-                    <p className="mt-10 text-center text-sm/6 text-gray-500 dark:text-slate-50">
-                        Don't Have an Account?{' '}
-                        <NavLink
-                            to={'/register'}
-                            className="font-semibold text-indigo-600 hover:text-indigo-500"
-                        >
-                            Register Today
-                        </NavLink>
-                    </p>
+                <FormWrapper
+                    title={'Sign In To Your Account'}
+                    formClasses={['space-y-6']}
+                    submitHandler={handleLogin}
+                >
+                    <FormTextInputGroup
+                        name={'email'}
+                        type={'email'}
+                        label={'Email'}
+                        required={true}
+                    />
+                    <FormTextInputGroup
+                        name={'password'}
+                        label={'Password'}
+                        type={'password'}
+                        required={true}
+                        subText={'Forgot Password?'}
+                        subTextRoute={'/forgot-password'}
+                    />
+                    <FormSubmitButton submitButtonText={'Sign In'} />
                 </FormWrapper>
+                <p className="text-center text-sm/6 text-gray-500 dark:text-slate-50">
+                    Don't Have an Account?{' '}
+                    <NavLink
+                        to={'/register'}
+                        className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    >
+                        Register Today
+                    </NavLink>
+                </p>
             </FormProvider>
         </>
     );

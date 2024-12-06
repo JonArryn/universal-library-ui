@@ -1,24 +1,35 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import useAuth from '../../hooks/useAuth.tsx';
 import { Link, useNavigate } from 'react-router-dom';
-import { IRegisterUserData } from '../../providers/AuthProvider.tsx';
 import FormWrapper from '../../components/form/FormWrapper.tsx';
 import FormTextInputGroup from '../../components/form/FormTextInputGroup.tsx';
 import FormSubmitButton from '../../components/form/FormSubmitButton.tsx';
 import FormError from '../../components/form/FormError.tsx';
 import { AxiosError } from 'axios';
+import useFormError from '../../hooks/useFormError.tsx';
+import { FormInputs } from '../../components/form/FormWrapper.tsx';
 
-interface Inputs extends IRegisterUserData {
+interface IRegisterUserData extends FormInputs {
+    name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
     root?: { message: string };
     generic?: string;
 }
 
 function RegisterForm() {
-    const methods = useForm<Inputs>();
+    const methods = useForm<IRegisterUserData>();
+    const { handleFormError } = useFormError<IRegisterUserData>({
+        formData: methods.getValues(),
+        setError: methods.setError,
+    });
     const { register } = useAuth();
     const navigate = useNavigate();
 
-    const handleRegister: SubmitHandler<Inputs> = async function (formData) {
+    const handleRegister: SubmitHandler<IRegisterUserData> = async function (
+        formData
+    ) {
         try {
             methods.clearErrors('generic');
             await register(formData);
@@ -26,23 +37,7 @@ function RegisterForm() {
         } catch (error: unknown) {
             if (error instanceof AxiosError) {
                 if (error.status && error.status >= 400 && error.status < 500) {
-                    const errorData = error?.response?.data;
-                    const formFields = Object.keys(formData) as Array<
-                        keyof Inputs
-                    >;
-                    const errorField = formFields.find(
-                        (fieldName) => fieldName in errorData.errors
-                    );
-                    if (errorField) {
-                        methods.setError(errorField, {
-                            message: errorData.message,
-                        });
-                    } else {
-                        methods.setError('generic', {
-                            type: 'custom',
-                            message: errorData.message,
-                        });
-                    }
+                    handleFormError(error?.response?.data);
                 }
             }
         }
@@ -50,38 +45,37 @@ function RegisterForm() {
     return (
         <>
             <FormProvider {...methods}>
-                <FormWrapper title={'Create an Account'}>
-                    <form
-                        className="space-y-6"
-                        onSubmit={methods.handleSubmit(handleRegister)}
-                    >
-                        <FormTextInputGroup
-                            name={'name'}
-                            label={'Name'}
-                            type={'text'}
-                            required={true}
-                        />
-                        <FormTextInputGroup
-                            name={'email'}
-                            label={'Email Address'}
-                            type={'email'}
-                            required={true}
-                        />
-                        <FormTextInputGroup
-                            name={'password'}
-                            label={'Password'}
-                            type={'password'}
-                            required={true}
-                        />
-                        <FormTextInputGroup
-                            name={'password_confirmation'}
-                            label={'Confirm Password'}
-                            type={'password'}
-                            required={true}
-                        />
-                        <FormSubmitButton submitButtonText={'Register'} />
-                        <FormError fieldName={'generic'} />
-                    </form>
+                <FormWrapper
+                    title={'Create an Account'}
+                    submitHandler={handleRegister}
+                >
+                    <FormTextInputGroup
+                        name={'name'}
+                        label={'Name'}
+                        type={'text'}
+                        required={true}
+                    />
+                    <FormTextInputGroup
+                        name={'email'}
+                        label={'Email Address'}
+                        type={'email'}
+                        required={true}
+                    />
+                    <FormTextInputGroup
+                        name={'password'}
+                        label={'Password'}
+                        type={'password'}
+                        required={true}
+                    />
+                    <FormTextInputGroup
+                        name={'password_confirmation'}
+                        label={'Confirm Password'}
+                        type={'password'}
+                        required={true}
+                    />
+                    <FormSubmitButton submitButtonText={'Register'} />
+                    <FormError fieldName={'generic'} />
+
                     <p className="mt-10 text-center text-sm/6 text-gray-500 dark:text-slate-50">
                         Already Have an Account?{' '}
                         <Link

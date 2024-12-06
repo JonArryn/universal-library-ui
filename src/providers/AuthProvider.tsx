@@ -6,20 +6,6 @@ interface IAuthProviderProps {
     children?: React.ReactNode;
 }
 
-export interface ILoginCredentials {
-    email: string;
-    password: string;
-}
-
-export interface IRegisterUserData {
-    name: string;
-    email: string;
-    password: string;
-    password_confirmation: string;
-    root?: { message: string };
-    generic?: string;
-}
-
 const AuthProvider = function ({ children }: IAuthProviderProps) {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [user, setUser] = useState<IUser | undefined>(undefined);
