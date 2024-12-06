@@ -1,7 +1,6 @@
 import './Home.css';
 import TopNav from './components/TopNav/TopNav.tsx';
 import { Outlet } from 'react-router-dom';
-import PageHeading from './components/PageHeading.tsx';
 import { useEffect } from 'react';
 import useAuth from './hooks/useAuth.tsx';
 
@@ -29,7 +28,7 @@ function Home() {
         <>
             <div className="min-h-full">
                 <TopNav />
-                <PageHeading headingText={'Home'} />
+
                 <main>
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         <Outlet />

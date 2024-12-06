@@ -1,7 +1,7 @@
 import DarkModeToggle from './DarkModeToggle.tsx';
 
 interface IPageHeadingProps {
-    headingText: string;
+    headingText: string | undefined;
 }
 
 const PageHeading = ({ headingText }: IPageHeadingProps) => {
