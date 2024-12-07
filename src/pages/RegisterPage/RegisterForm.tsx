@@ -1,12 +1,12 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import useAuth from '../../hooks/useAuth.tsx';
+import useAuth from '../../hooks/useAuth.ts';
 import { Link, useNavigate } from 'react-router-dom';
 import FormWrapper from '../../components/form/FormWrapper.tsx';
 import FormTextInputGroup from '../../components/form/FormTextInputGroup.tsx';
 import FormSubmitButton from '../../components/form/FormSubmitButton.tsx';
 import FormError from '../../components/form/FormError.tsx';
 import { AxiosError } from 'axios';
-import useFormError from '../../hooks/useFormError.tsx';
+import useFormError from '../../hooks/useFormError.ts';
 import { FormInputs } from '../../components/form/FormWrapper.tsx';
 
 interface IRegisterUserData extends FormInputs {

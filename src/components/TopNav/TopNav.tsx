@@ -1,33 +1,29 @@
 import MobileProfileMenu from './components/MobileProfileMenu.tsx';
 import MobileNav from './components/MobileNav.tsx';
 import MobileMenuButton from './components/MobileMenuButton.tsx';
-import { useLocation, useNavigate } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth.tsx';
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth.ts';
 import { CgProfile } from 'react-icons/cg';
 import NavigationLink from './components/NavigationLink.tsx';
 import StyledButton from '../StyledButton.tsx';
 import ProfileDropdown from './components/ProfileDropdown.tsx';
 import { useEffect, useRef, useState } from 'react';
-import {
-    publicNavItems,
-    publicAccountNavItems,
-    INavItem,
-    profileDropdownItems,
-} from './publicNavItems.ts';
-import PageHeading from '../PageHeading.tsx';
+import { publicAccountNavItems, INavItem } from './navItems.ts';
 
-const TopNav = () => {
-    const [headingTitle, setHeadingTitle] = useState<string | undefined>();
-    const [menuOpen, setMenuOpen] = useState<boolean>(false);
+interface ITopNavProps {
+    mainNavItems: INavItem[];
+}
+
+const TopNav = ({ mainNavItems }: ITopNavProps) => {
+    const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
 
     const menuRef = useRef<HTMLDivElement>(null);
 
     const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
-    const { pathname } = useLocation();
 
     const toggleMenu = function () {
-        setMenuOpen((prev) => !prev); // Toggle the menu on button click
+        setProfileMenuOpen((prev) => !prev); // Toggle the menu on button click
     };
 
     const handleClickOutside = function (event: MouseEvent) {
@@ -36,21 +32,9 @@ const TopNav = () => {
             menuRef.current &&
             !menuRef.current.contains(event.target as Node)
         ) {
-            setMenuOpen(false);
+            setProfileMenuOpen(false);
         }
     };
-
-    useEffect(() => {
-        const allNavItems = [
-            ...publicNavItems,
-            ...publicAccountNavItems,
-            ...profileDropdownItems,
-        ];
-        const currentNavItem = allNavItems.find(
-            (item: INavItem) => item.route === pathname
-        );
-        setHeadingTitle(currentNavItem?.navText);
-    }, [pathname]);
 
     useEffect(() => {
         // Add event listener for clicks outside the menu
@@ -111,7 +95,7 @@ const TopNav = () => {
                             {/* Nav Links */}
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-baseline space-x-4">
-                                    {publicNavItems.map((item) => (
+                                    {mainNavItems.map((item) => (
                                         <NavigationLink
                                             path={item.route}
                                             text={item.navText}
@@ -125,7 +109,7 @@ const TopNav = () => {
                         {/* Nav Right Menu */}
                         <MobileMenuButton />
                     </div>
-                    {menuOpen && (
+                    {profileMenuOpen && (
                         <div ref={menuRef}>
                             <ProfileDropdown />
                         </div>
@@ -138,7 +122,6 @@ const TopNav = () => {
                     <MobileProfileMenu />
                 </div>
             </nav>
-            <PageHeading headingText={headingTitle} />
         </>
     );
 };

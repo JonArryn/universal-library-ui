@@ -3,7 +3,7 @@ export interface INavItem {
     route: string;
 }
 
-const publicNavItems: INavItem[] = [
+const navItems: INavItem[] = [
     { navText: 'Home', route: '/' },
     { navText: 'About', route: '/about' },
 ];
@@ -19,4 +19,9 @@ const profileDropdownItems: INavItem[] = [
     { navText: 'Log Out', route: '/logout' },
 ];
 
-export { publicNavItems, publicAccountNavItems, profileDropdownItems };
+const appNavItems: INavItem[] = [
+    { navText: 'Dashboard', route: '/app' },
+    { navText: 'Libraries', route: '/app/libraries' },
+];
+
+export { navItems, publicAccountNavItems, profileDropdownItems, appNavItems };

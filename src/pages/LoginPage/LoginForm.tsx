@@ -1,6 +1,6 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import FormWrapper from '../../components/form/FormWrapper.tsx';
-import useAuth from '../../hooks/useAuth.tsx';
+import useAuth from '../../hooks/useAuth.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
 import FormTextInputGroup from '../../components/form/FormTextInputGroup.tsx';
 import FormSubmitButton from '../../components/form/FormSubmitButton.tsx';
