@@ -21,7 +21,20 @@ const profileDropdownItems: INavItem[] = [
 
 const appNavItems: INavItem[] = [
     { navText: 'Dashboard', route: '/app' },
-    { navText: 'Libraries', route: '/app/libraries' },
+    { navText: 'Libraries', route: '/app/library' },
 ];
 
-export { navItems, publicAccountNavItems, profileDropdownItems, appNavItems };
+const allNavItems = [
+    ...navItems,
+    ...publicAccountNavItems,
+    ...profileDropdownItems,
+    ...appNavItems,
+];
+
+export {
+    navItems,
+    publicAccountNavItems,
+    profileDropdownItems,
+    appNavItems,
+    allNavItems,
+};

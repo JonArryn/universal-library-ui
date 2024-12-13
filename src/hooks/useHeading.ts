@@ -1,33 +1,31 @@
 import { useEffect, useState } from 'react';
-import {
-    appNavItems,
-    navItems,
-    publicAccountNavItems,
-} from '../components/TopNav/navItems.ts';
+import { allNavItems, INavItem } from '../components/TopNav/navItems.ts';
 import { useLocation } from 'react-router-dom';
+import subNavItems from '../components/TopNav/subNavItems.ts';
 
 function useHeading() {
     const [headingTitle, setHeadingTitle] = useState<string | undefined>(
         undefined
     );
+    const [menuItems, setMenuItems] = useState<INavItem[] | undefined>([]);
 
     const { pathname } = useLocation();
 
     useEffect(() => {
-        const joinedNavItems = [
-            ...navItems,
-            ...publicAccountNavItems,
-            ...appNavItems,
-        ];
-
-        const currentNavItem = joinedNavItems.find(
+        const currentNavItem = allNavItems.find(
             (navItem) => navItem.route === pathname
         );
 
         setHeadingTitle(currentNavItem?.navText);
+
+        const currentSubNavItem = subNavItems.find(
+            (navItem) => navItem.parentRoute === pathname
+        );
+
+        setMenuItems(currentSubNavItem?.navItems);
     }, [pathname]);
 
-    return { headingTitle };
+    return { headingTitle, menuItems };
 }
 
 export default useHeading;

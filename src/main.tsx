@@ -10,6 +10,9 @@ import RegisterPage from './pages/RegisterPage/RegisterPage.tsx';
 import LogOutPage from './pages/LogOutPage.tsx';
 import HomePage from './pages/HomePage.tsx';
 import AboutPage from './pages/AboutPage.tsx';
+import LibraryPage from './app/pages/Library/LibraryPage.tsx';
+import CreateLibraryPage from './app/pages/Library/CreateLibraryPage.tsx';
+import MyLibrariesPage from './app/pages/Library/MyLibrariesPage.tsx';
 
 const router = createBrowserRouter([
     {
@@ -42,6 +45,20 @@ const router = createBrowserRouter([
             {
                 path: '/app',
                 element: <DashboardPage />,
+            },
+            {
+                path: '/app/library',
+                element: <LibraryPage />,
+                children: [
+                    {
+                        path: '/app/library',
+                        element: <MyLibrariesPage />,
+                    },
+                    {
+                        path: '/app/library/create',
+                        element: <CreateLibraryPage />,
+                    },
+                ],
             },
         ],
     },
