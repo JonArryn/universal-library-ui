@@ -1,5 +1,5 @@
 interface ITextContentProps {
-    text: string;
+    text: string | number;
 }
 
 function TextContent({ text }: ITextContentProps) {

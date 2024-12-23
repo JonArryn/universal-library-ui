@@ -18,6 +18,7 @@ const PageHeading = () => {
                                 <NavigationLink
                                     path={navItem.route}
                                     text={navItem.navText}
+                                    key={navItem.navText}
                                 />
                             ))}
                     </div>

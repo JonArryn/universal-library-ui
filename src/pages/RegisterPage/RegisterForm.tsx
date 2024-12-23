@@ -9,7 +9,7 @@ import { AxiosError } from 'axios';
 import useFormError from '../../hooks/useFormError.ts';
 import { FormInputs } from '../../components/form/FormWrapper.tsx';
 
-interface IRegisterUserData extends FormInputs {
+export interface IRegisterUserData extends FormInputs {
     name: string;
     email: string;
     password: string;

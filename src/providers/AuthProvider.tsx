@@ -1,6 +1,9 @@
 import AuthContext, { IUser, ICredentials } from '../contexts/AuthContext.tsx';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import apiService, { IApiOkResponse } from '../api/apiService.ts';
+
+import { IRegisterUserData } from '../pages/RegisterPage/RegisterForm.tsx';
+import { AxiosError } from 'axios';
 
 interface IAuthProviderProps {
     children?: React.ReactNode;
@@ -18,7 +21,6 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
             setIsAuthenticated(true);
             setUser(registerResponseData.data.user);
         }
-        console.log(response);
         return registerResponseData;
     };
 
@@ -36,8 +38,7 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
     };
 
     const logout = async function () {
-        const logoutResponse = await apiService.post('/api/logout');
-        console.log(logoutResponse);
+        await apiService.post('/api/logout');
         setIsAuthenticated(false);
         setUser(undefined);
     };
@@ -66,23 +67,12 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
             return userData;
         } catch (error: unknown) {
             // TODO: Better handle errors in AuthProvider getUser function
-            console.log(error);
+            if (error instanceof AxiosError) {
+                setIsAuthenticated(false);
+                setUser(undefined);
+            }
         }
     };
-
-    useEffect(() => {
-        apiService.interceptors.response.use(
-            async function (response) {
-                return response;
-            },
-            function async(error) {
-                if (error.response.data.status === 401) {
-                    console.log('401 returned from useEffect interceptor');
-                }
-                return Promise.reject(error);
-            }
-        );
-    }, []);
 
     return (
         <AuthContext.Provider

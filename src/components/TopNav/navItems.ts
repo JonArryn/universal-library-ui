@@ -22,6 +22,7 @@ const profileDropdownItems: INavItem[] = [
 const appNavItems: INavItem[] = [
     { navText: 'Dashboard', route: '/app' },
     { navText: 'Libraries', route: '/app/library' },
+    { navText: 'Books', route: '/app/book' },
 ];
 
 const allNavItems = [

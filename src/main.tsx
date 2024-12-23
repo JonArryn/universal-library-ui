@@ -13,6 +13,8 @@ import AboutPage from './pages/AboutPage.tsx';
 import LibraryPage from './app/pages/Library/LibraryPage.tsx';
 import CreateLibraryPage from './app/pages/Library/CreateLibraryPage.tsx';
 import MyLibrariesPage from './app/pages/Library/MyLibrariesPage.tsx';
+import BookPage from './app/pages/Book/BookPage.tsx';
+import MyBooksPage from './app/pages/Book/MyBooksPage.tsx';
 
 const router = createBrowserRouter([
     {
@@ -57,6 +59,16 @@ const router = createBrowserRouter([
                     {
                         path: '/app/library/create',
                         element: <CreateLibraryPage />,
+                    },
+                ],
+            },
+            {
+                path: '/app/book',
+                element: <BookPage />,
+                children: [
+                    {
+                        path: '/app/book',
+                        element: <MyBooksPage />,
                     },
                 ],
             },

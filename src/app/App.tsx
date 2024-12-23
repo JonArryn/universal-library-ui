@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import TopNav from '../components/TopNav/TopNav.tsx';
 
 import { appNavItems } from '../components/TopNav/navItems.ts';
+import InterceptorProvider from '../providers/InterceptorProvider.tsx';
 
 const App = function () {
     const { isAuthenticated, isSessionActive } = useAuth();
@@ -22,15 +23,17 @@ const App = function () {
 
     return (
         <>
-            <TopNav mainNavItems={appNavItems} />
+            <InterceptorProvider>
+                <TopNav mainNavItems={appNavItems} />
 
-            <div>
-                {isAuthenticated ? (
-                    <Outlet />
-                ) : (
-                    <Navigate to="/login" replace />
-                )}
-            </div>
+                <div>
+                    {isAuthenticated ? (
+                        <Outlet />
+                    ) : (
+                        <Navigate to="/login" replace />
+                    )}
+                </div>
+            </InterceptorProvider>
         </>
     );
 };

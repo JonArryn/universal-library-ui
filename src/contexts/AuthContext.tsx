@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { IApiErrorResponse, IApiOkResponse } from '../api/apiService.ts';
-import { IRegisterUserData } from '../providers/AuthProvider.tsx';
+import { IRegisterUserData } from '../pages/RegisterPage/RegisterForm.tsx';
 
 export interface ICredentials {
     email: string;
