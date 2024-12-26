@@ -23,6 +23,7 @@ export interface IApiValidationErrorResponse {
 const apiService: AxiosInstance = axios.default.create({
     baseURL: 'http://localhost:8000/',
     withCredentials: true,
+    withXSRFToken: true,
     headers: {
         Accept: 'application/json',
     },
