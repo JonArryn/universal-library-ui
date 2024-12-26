@@ -10,6 +10,7 @@ function RegisterPage() {
     useEffect(() => {
         const checkAuth = async () => {
             const active = await isSessionActive();
+
             if (active) {
                 navigate('/app');
             }

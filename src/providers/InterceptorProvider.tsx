@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import apiService from '../api/apiService.ts';
 
 interface IInterceptorProviderProps {
@@ -8,6 +8,7 @@ interface IInterceptorProviderProps {
 
 function InterceptorProvider({ children }: IInterceptorProviderProps) {
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         apiService.interceptors.response.use(
@@ -15,7 +16,10 @@ function InterceptorProvider({ children }: IInterceptorProviderProps) {
                 return response;
             },
             function async(error) {
-                if (error.response.status === 401) {
+                if (
+                    error.response.status === 401 &&
+                    location.pathname.startsWith('/app')
+                ) {
                     navigate('/login');
                 }
                 return Promise.reject(error);
