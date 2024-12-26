@@ -5,11 +5,9 @@ import { useEffect } from 'react';
 import useAuth from './hooks/useAuth.ts';
 import PageHeading from './components/PageHeading.tsx';
 import { navItems } from './components/TopNav/navItems.ts';
-import useHeading from './hooks/useHeading.ts';
 
 function Home() {
     const { isSessionActive } = useAuth();
-    const { headingTitle } = useHeading();
 
     // for tailwind
     useEffect(() => {
@@ -32,7 +30,7 @@ function Home() {
         <>
             <div className="min-h-full">
                 <TopNav mainNavItems={navItems} />
-                <PageHeading headingText={headingTitle} />
+                <PageHeading />
                 <main>
                     <div>
                         <Outlet />
