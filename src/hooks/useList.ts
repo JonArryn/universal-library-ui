@@ -13,23 +13,23 @@ export interface IListPagination {
     total: number;
 }
 
+export interface ISortRecord {
+    field: string;
+    ascending: boolean;
+}
+
 function useList(
     endpoint: string,
     columns: IListColumns,
-    defaultSortField?: string,
-    defaultSortDirection?: 'asc' | 'desc'
+    defaultSort?: ISortRecord
 ) {
     const columnsRef = useRef(columns);
 
     const [columnRows, setColumnRows] = useState<
         Record<string, any>[] | undefined
     >();
-    const [sortField, setSortField] = useState<string | undefined>(
-        defaultSortField
-            ? defaultSortDirection === 'desc'
-                ? `-${defaultSortField}`
-                : defaultSortField
-            : undefined
+    const [sortField, setSortField] = useState<ISortRecord | undefined>(
+        defaultSort
     );
     const [pagination, setPagination] = useState<IListPagination | undefined>();
     const [resultsPage, setResultsPage] = useState<number>(1);
@@ -38,9 +38,8 @@ function useList(
         function (): string {
             const fields: string[] = Object.keys(columnsRef.current);
             const fieldsString = fields ? '?fields=' + fields?.join(',') : '';
-            const sortString = sortField ? `&sort=${sortField}` : '';
+            const sortString = generateSortString();
             const pageString = resultsPage ? `&page=${resultsPage}` : '';
-
             return `${endpoint}${fieldsString}${sortString}${pageString}`;
         },
         [resultsPage, sortField, endpoint]
@@ -68,11 +67,21 @@ function useList(
 
     const changeSort = function (field: string) {
         if (field in columns) {
-            if (sortField === field) {
-                setSortField(`-${field}`);
+            if (sortField?.field === field) {
+                setSortField({ ...sortField, ascending: !sortField.ascending });
             } else {
-                setSortField(field);
+                setSortField({ field, ascending: true });
             }
+        }
+    };
+
+    const generateSortString = function () {
+        if (sortField?.ascending) {
+            return `&sort=${sortField?.field}`;
+        } else if (!sortField?.ascending) {
+            return `&sort=-${sortField?.field}`;
+        } else {
+            return '';
         }
     };
 

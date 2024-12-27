@@ -50,7 +50,9 @@ function Paginator({
                 value={currentPage}
             >
                 {pageNumberArr.map((page) => (
-                    <option value={page}>{page}</option>
+                    <option value={page} key={page}>
+                        {page}
+                    </option>
                 ))}
             </select>
         );

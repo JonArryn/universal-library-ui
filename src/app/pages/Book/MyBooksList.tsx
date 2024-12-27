@@ -2,14 +2,22 @@ import PageContainer from '../../../components/layout/PageContainer.tsx';
 import TableList from '../../../components/layout/TableList.tsx';
 import useList from '../../../hooks/useList.ts';
 
-function MyBooksPage() {
-    const { columns, columnRows, pagination, changeSort, changePage } = useList(
+function MyBooksList() {
+    const {
+        columns,
+        columnRows,
+        pagination,
+        sortField,
+        changeSort,
+        changePage,
+    } = useList(
         '/api/book',
         {
             id: { visible: false },
             title: { visible: true, displayName: 'Title' },
             authorName: { visible: true, displayName: 'Author' },
-        }
+        },
+        { field: 'title', direction: 'asc' }
     );
     return (
         <>
@@ -24,10 +32,11 @@ function MyBooksPage() {
                     listRows={columnRows && columnRows}
                     changePage={changePage}
                     changeSort={changeSort}
+                    sortField={sortField}
                 />
             </PageContainer>
         </>
     );
 }
 
-export default MyBooksPage;
+export default MyBooksList;

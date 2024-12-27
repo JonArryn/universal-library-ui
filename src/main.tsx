@@ -14,7 +14,7 @@ import LibraryPage from './app/pages/Library/LibraryPage.tsx';
 import CreateLibraryPage from './app/pages/Library/CreateLibraryPage.tsx';
 import MyLibrariesPage from './app/pages/Library/MyLibrariesPage.tsx';
 import BookPage from './app/pages/Book/BookPage.tsx';
-import MyBooksPage from './app/pages/Book/MyBooksPage.tsx';
+import MyBooksList from './app/pages/Book/MyBooksList.tsx';
 
 const router = createBrowserRouter([
     {
@@ -68,7 +68,7 @@ const router = createBrowserRouter([
                 children: [
                     {
                         path: '/app/book',
-                        element: <MyBooksPage />,
+                        element: <MyBooksList />,
                     },
                 ],
             },
