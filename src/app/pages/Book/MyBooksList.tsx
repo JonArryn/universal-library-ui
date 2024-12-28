@@ -4,8 +4,8 @@ import useList from '../../../hooks/useList.ts';
 
 function MyBooksList() {
     const {
-        columns,
-        columnRows,
+        listHeaders,
+        listRows,
         pagination,
         sortField,
         changeSort,
@@ -17,7 +17,13 @@ function MyBooksList() {
             title: { visible: true, displayName: 'Title' },
             authorName: { visible: true, displayName: 'Author' },
         },
-        { field: 'title', direction: 'asc' }
+        { field: 'title', ascending: true },
+
+        {
+            library: {
+                visibleFields: [{ fieldName: 'name', displayName: 'Library' }],
+            },
+        }
     );
     return (
         <>
@@ -27,9 +33,9 @@ function MyBooksList() {
                     description={
                         'List of books from all of your owned libraries'
                     }
-                    tableHeaders={columns}
+                    listRows={listRows && listRows}
+                    listHeaders={listHeaders}
                     pagination={pagination}
-                    listRows={columnRows && columnRows}
                     changePage={changePage}
                     changeSort={changeSort}
                     sortField={sortField}

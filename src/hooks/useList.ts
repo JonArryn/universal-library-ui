@@ -1,8 +1,11 @@
 import apiService from '../api/apiService.ts';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export interface IListColumns {
-    [key: string]: { visible: boolean; displayName?: string };
+export interface IListFields {
+    [key: string]: {
+        visible: boolean;
+        displayName?: string;
+    };
 }
 
 export interface IListPagination {
@@ -18,31 +21,64 @@ export interface ISortRecord {
     ascending: boolean;
 }
 
+interface IVisibleField {
+    fieldName: string;
+    displayName: string;
+}
+
+export interface IHeader {
+    rowKey: string;
+    displayName: string;
+}
+
+export interface IIncludeFields {
+    [key: string]: { visibleFields: IVisibleField[] };
+}
+
 function useList(
     endpoint: string,
-    columns: IListColumns,
-    defaultSort?: ISortRecord
+    fields: IListFields,
+    defaultSort: ISortRecord,
+    includeFields?: IIncludeFields
 ) {
-    const columnsRef = useRef(columns);
+    const columnsRef = useRef(fields);
+    const includesRef = useRef(includeFields);
 
-    const [columnRows, setColumnRows] = useState<
+    const [listRows, setListRows] = useState<
         Record<string, any>[] | undefined
     >();
-    const [sortField, setSortField] = useState<ISortRecord | undefined>(
-        defaultSort
-    );
+    const [listHeaders, setListHeaders] = useState<IHeader[]>([]);
+    const [sortField, setSortField] = useState<ISortRecord>(defaultSort);
     const [pagination, setPagination] = useState<IListPagination | undefined>();
     const [resultsPage, setResultsPage] = useState<number>(1);
 
+    const generateSortString = useCallback(
+        function () {
+            if (sortField.ascending) {
+                return `&sort=${sortField?.field}`;
+            } else if (!sortField.ascending) {
+                return `&sort=-${sortField.field}`;
+            } else {
+                return '';
+            }
+        },
+        [sortField]
+    );
+
     const buildQueryString = useCallback(
         function (): string {
+            const include =
+                includesRef.current && Object.keys(includesRef.current);
+            const includeString = include
+                ? `&include=${include.join(',')}`
+                : '';
             const fields: string[] = Object.keys(columnsRef.current);
             const fieldsString = fields ? '?fields=' + fields?.join(',') : '';
             const sortString = generateSortString();
             const pageString = resultsPage ? `&page=${resultsPage}` : '';
-            return `${endpoint}${fieldsString}${sortString}${pageString}`;
+            return `${endpoint}${fieldsString}${includeString}${sortString}${pageString}`;
         },
-        [resultsPage, sortField, endpoint]
+        [generateSortString, resultsPage, endpoint]
     );
 
     const getListData = useCallback(
@@ -60,28 +96,77 @@ function useList(
                     to: response.data.meta.to,
                 },
             });
-            setColumnRows(response.data.data);
+
+            // Process the include fields and merge into rows
+            const processedRows = response.data.data.map((row: any) => {
+                const updatedRow = { ...row }; // Copy the existing row data
+
+                if (includesRef.current) {
+                    for (const [includeKey, includeValue] of Object.entries(
+                        includesRef.current
+                    )) {
+                        const includeData = row[includeKey];
+                        if (includeData) {
+                            includeValue.visibleFields.forEach((field) => {
+                                const newKey =
+                                    includeKey +
+                                    field.fieldName.charAt(0).toUpperCase() +
+                                    field.fieldName.slice(1); // e.g., libraryName
+                                updatedRow[newKey] =
+                                    includeData[field.fieldName];
+                            });
+                        }
+                    }
+                }
+
+                return updatedRow;
+            });
+            setListRows(processedRows); // Update the state with processed rows
         },
         [buildQueryString]
     );
 
+    const createListHeaderData = useCallback(function () {
+        const includeColumnArr =
+            includesRef.current && Object.entries(includesRef.current);
+
+        const includesHeaderArr: IHeader[] = [];
+
+        includeColumnArr?.forEach(([include, includeValues]) => {
+            includeValues.visibleFields.forEach((field) => {
+                const headerObj = {
+                    rowKey:
+                        include +
+                        field.fieldName.charAt(0).toUpperCase() +
+                        field.fieldName.slice(1),
+                    displayName: field.displayName,
+                };
+                includesHeaderArr.push(headerObj);
+            });
+        });
+
+        const columnHeaderArr: IHeader[] = [];
+
+        Object.entries(columnsRef.current).forEach(([key, value]) => {
+            if (value.visible) {
+                const headerObj = {
+                    rowKey: key,
+                    displayName: value.displayName ? value.displayName : '',
+                };
+                columnHeaderArr.push(headerObj);
+            }
+        });
+
+        setListHeaders([...columnHeaderArr, ...includesHeaderArr]);
+    }, []);
+
     const changeSort = function (field: string) {
-        if (field in columns) {
-            if (sortField?.field === field) {
+        if (field in fields) {
+            if (sortField.field === field) {
                 setSortField({ ...sortField, ascending: !sortField.ascending });
             } else {
                 setSortField({ field, ascending: true });
             }
-        }
-    };
-
-    const generateSortString = function () {
-        if (sortField?.ascending) {
-            return `&sort=${sortField?.field}`;
-        } else if (!sortField?.ascending) {
-            return `&sort=-${sortField?.field}`;
-        } else {
-            return '';
         }
     };
 
@@ -91,11 +176,12 @@ function useList(
 
     useEffect(() => {
         getListData();
-    }, [getListData]);
+        createListHeaderData();
+    }, [createListHeaderData, getListData]);
 
     return {
-        columns: columnsRef.current,
-        columnRows,
+        listRows,
+        listHeaders,
         pagination,
         sortField,
         changeSort,
