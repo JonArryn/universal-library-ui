@@ -1,9 +1,19 @@
 import PageContainer from '../../../components/layout/PageContainer.tsx';
-import TableList from '../../../components/layout/TableList.tsx';
+import ListTable from '../../../components/layout/ListTable.tsx';
 import useList from '../../../hooks/useList.ts';
 import { useParams } from 'react-router-dom';
+import PageHeading from '../../../components/PageHeading.tsx';
+import { useCallback, useEffect, useState } from 'react';
+import apiService from '../../../api/apiService.ts';
+import { ILibrary } from '../../types/entityTypes.ts';
 
 function ManageLibraryPage() {
+    const [library, setLibrary] = useState<ILibrary>({
+        id: 0,
+        name: 'Library',
+        userId: 0,
+    });
+
     const params = useParams();
     const {
         listHeaders,
@@ -21,18 +31,44 @@ function ManageLibraryPage() {
         },
         { field: 'title', ascending: true }
     );
+
+    const getLibraryData = useCallback(
+        async function () {
+            const libraryResponse = await apiService.get(
+                `/library/${params.libraryId}`
+            );
+            setLibrary(libraryResponse.data.data);
+        },
+        [params.libraryId]
+    );
+
+    useEffect(() => {
+        getLibraryData();
+    }, [getLibraryData]);
     return (
-        <PageContainer>
-            <TableList
-                title={'Library Books'}
-                listHeaders={listHeaders}
-                changePage={changePage}
-                changeSort={changeSort}
-                pagination={pagination}
-                listRows={listRows}
-                sortField={sortField}
+        <>
+            <PageHeading
+                headingTitle={library.name}
+                menuItems={[
+                    { navText: 'Books', route: `/app/library/${library.id}` },
+                ]}
+                primaryButton={{
+                    text: '+ New Book',
+                    handleClick: function () {},
+                }}
             />
-        </PageContainer>
+            <PageContainer>
+                <ListTable
+                    title={`${library.name} Books`}
+                    listHeaders={listHeaders}
+                    changePage={changePage}
+                    changeSort={changeSort}
+                    pagination={pagination}
+                    listRows={listRows}
+                    sortField={sortField}
+                />
+            </PageContainer>
+        </>
     );
 }
 

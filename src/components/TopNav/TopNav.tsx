@@ -9,6 +9,7 @@ import StyledButton from '../StyledButton.tsx';
 import ProfileDropdown from './components/ProfileDropdown.tsx';
 import { useEffect, useRef, useState } from 'react';
 import { publicAccountNavItems, INavItem } from '../../Constants/navItems.ts';
+import DarkModeToggle from '../DarkModeToggle.tsx';
 
 interface ITopNavProps {
     mainNavItems: INavItem[];
@@ -105,9 +106,16 @@ const TopNav = ({ mainNavItems }: ITopNavProps) => {
                                 </div>
                             </div>
                         </div>
-                        {isAuthenticated ? <DashboardLinks /> : <LoginLinks />}
-                        {/* Nav Right Menu */}
-                        <MobileMenuButton />
+                        <div className={'flex gap-5'}>
+                            {isAuthenticated ? (
+                                <DashboardLinks />
+                            ) : (
+                                <LoginLinks />
+                            )}
+                            {/* Nav Right Menu */}
+                            <MobileMenuButton />
+                            <DarkModeToggle />
+                        </div>
                     </div>
                     {profileMenuOpen && (
                         <div ref={menuRef}>
@@ -115,6 +123,7 @@ const TopNav = ({ mainNavItems }: ITopNavProps) => {
                         </div>
                     )}
                 </div>
+
                 {/*/*<!-- Mobile menu, show/hide based on menu state. -->*/}
                 {/* Mobile Menu */}
                 <div className="md:hidden" id="mobile-menu">

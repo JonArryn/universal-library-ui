@@ -7,3 +7,9 @@ export interface IBook {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface ILibrary {
+    id: number;
+    name: string;
+    userId: number;
+}

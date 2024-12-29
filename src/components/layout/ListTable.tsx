@@ -1,4 +1,3 @@
-import StyledButton from '../StyledButton.tsx';
 import Paginator from '../Paginator.tsx';
 import {
     IHeader,
@@ -25,7 +24,7 @@ interface ITableListProps {
     changeSort: (arg0: string) => void;
 }
 
-function TableList({
+function ListTable({
     title,
     description,
     sortField,
@@ -105,11 +104,8 @@ function TableList({
                         {description}
                     </p>
                 </div>
-                <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                    <StyledButton text={'+ New Record'} style={'new'} />
-                </div>
             </div>
-            <div className="mt-8 flow-root">
+            <div className="mt-4 flow-root">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black/5 sm:rounded-lg">
@@ -140,4 +136,4 @@ function TableList({
     );
 }
 
-export default TableList;
+export default ListTable;

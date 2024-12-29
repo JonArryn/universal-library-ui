@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import PageHeading from '../../../components/PageHeading.tsx';
 
 export interface ILibrary {
     name: string;
@@ -10,7 +9,6 @@ export interface ILibrary {
 function LibraryPage() {
     return (
         <>
-            <PageHeading />
             <Outlet />
         </>
     );

@@ -1,6 +1,7 @@
 import PageContainer from '../../../components/layout/PageContainer.tsx';
-import TableList from '../../../components/layout/TableList.tsx';
+import ListTable from '../../../components/layout/ListTable.tsx';
 import useList from '../../../hooks/useList.ts';
+import PageHeading from '../../../components/PageHeading.tsx';
 
 function MyBooksList() {
     const {
@@ -27,8 +28,15 @@ function MyBooksList() {
     );
     return (
         <>
+            <PageHeading
+                headingTitle={'My Books'}
+                primaryButton={{
+                    text: '+ New Book',
+                    handleClick: function () {},
+                }}
+            />
             <PageContainer>
-                <TableList
+                <ListTable
                     title={'Books'}
                     description={
                         'List of books from all of your owned libraries'
