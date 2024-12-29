@@ -15,11 +15,15 @@ const PageHeading = () => {
                     <div className={'ml-6 flex justify-between'}>
                         {menuItems &&
                             menuItems.map((navItem) => (
-                                <NavigationLink
-                                    path={navItem.route}
-                                    text={navItem.navText}
-                                    key={navItem.navText}
-                                />
+                                <div
+                                    className={`${navItem.hidden && 'hidden'}`}
+                                >
+                                    <NavigationLink
+                                        path={navItem.route}
+                                        text={navItem.navText}
+                                        key={navItem.navText}
+                                    />
+                                </div>
                             ))}
                     </div>
                 </div>

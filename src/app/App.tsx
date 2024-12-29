@@ -3,7 +3,7 @@ import useAuth from '../hooks/useAuth.ts';
 import { useEffect } from 'react';
 import TopNav from '../components/TopNav/TopNav.tsx';
 
-import { appNavItems } from '../components/TopNav/navItems.ts';
+import { appNavItems } from '../Constants/navItems.ts';
 import InterceptorProvider from '../providers/InterceptorProvider.tsx';
 
 const App = function () {

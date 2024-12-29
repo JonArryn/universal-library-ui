@@ -1,6 +1,6 @@
 import useAuth from '../../../hooks/useAuth.ts';
 import { useNavigate } from 'react-router-dom';
-import { profileDropdownItems } from '../navItems.ts';
+import { profileDropdownItems } from '../../../Constants/navItems.ts';
 import MenuItem from './MenuItem.tsx';
 
 const ProfileDropdown = () => {

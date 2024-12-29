@@ -18,6 +18,7 @@ const subNavItems: SubNavItems = [
             {
                 navText: 'New Library',
                 route: '/app/library/create',
+                hidden: true,
             },
         ],
     },

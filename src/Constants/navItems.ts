@@ -1,6 +1,7 @@
 export interface INavItem {
     navText: string;
     route: string;
+    hidden?: boolean;
 }
 
 const navItems: INavItem[] = [

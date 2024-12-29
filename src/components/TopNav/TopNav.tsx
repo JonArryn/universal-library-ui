@@ -8,7 +8,7 @@ import NavigationLink from './components/NavigationLink.tsx';
 import StyledButton from '../StyledButton.tsx';
 import ProfileDropdown from './components/ProfileDropdown.tsx';
 import { useEffect, useRef, useState } from 'react';
-import { publicAccountNavItems, INavItem } from './navItems.ts';
+import { publicAccountNavItems, INavItem } from '../../Constants/navItems.ts';
 
 interface ITopNavProps {
     mainNavItems: INavItem[];

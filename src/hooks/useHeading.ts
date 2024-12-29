@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { allNavItems, INavItem } from '../components/TopNav/navItems.ts';
+import { allNavItems, INavItem } from '../Constants/navItems.ts';
 import { useLocation } from 'react-router-dom';
-import subNavItems from '../components/TopNav/subNavItems.ts';
+import subNavItems from '../Constants/subNavItems.ts';
 
 function useHeading() {
     const [headingTitle, setHeadingTitle] = useState<string | undefined>(
@@ -12,7 +12,13 @@ function useHeading() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        const currentNavItem = allNavItems.find(
+        const allSubNavItems = subNavItems.flatMap((subNavItem) =>
+            subNavItem.navItems.map((navItems) => navItems)
+        );
+
+        const combinedNavItems = [...allNavItems, ...allSubNavItems];
+
+        const currentNavItem = combinedNavItems.find(
             (navItem) => navItem.route === pathname
         );
 

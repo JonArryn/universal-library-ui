@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
 import useAuth from './hooks/useAuth.ts';
 import PageHeading from './components/PageHeading.tsx';
-import { navItems } from './components/TopNav/navItems.ts';
+import { navItems } from './Constants/navItems.ts';
 
 function Home() {
     const { isSessionActive } = useAuth();
