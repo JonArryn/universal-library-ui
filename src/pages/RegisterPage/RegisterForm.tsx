@@ -33,7 +33,7 @@ function RegisterForm() {
         try {
             methods.clearErrors('generic');
             await register(formData);
-            navigate('/app');
+            navigate('/app/dashboard');
         } catch (error: unknown) {
             if (error instanceof AxiosError) {
                 if (error.status && error.status >= 400 && error.status < 500) {

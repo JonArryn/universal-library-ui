@@ -23,7 +23,7 @@ const LoginForm = () => {
     ) => {
         try {
             await login(formData);
-            navigate('/app');
+            navigate('/app/dashboard');
         } catch (error: unknown) {
             if (error instanceof AxiosError) {
                 if (error.status && error.status >= 400 && error.status < 500) {

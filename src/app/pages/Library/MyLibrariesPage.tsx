@@ -5,6 +5,7 @@ import LibraryCard from './components/LibraryCard.tsx';
 import { useNavigate } from 'react-router-dom';
 import { ILibrary } from './LibraryPage.tsx';
 import apiService from '../../../api/apiService.ts';
+import PageContainer from '../../../components/layout/PageContainer.tsx';
 
 function MyLibrariesPage() {
     const [libraries, setLibraries] = useState<[] | ILibrary[]>([]);
@@ -21,7 +22,7 @@ function MyLibrariesPage() {
     }, [getLibraries]);
 
     return (
-        <div className={'container mx-auto space-y-6 px-4 py-5'}>
+        <PageContainer>
             <div className={'flex justify-between'}>
                 <ContentHeading text={'My Libraries'} />
                 <StyledButton
@@ -30,11 +31,13 @@ function MyLibrariesPage() {
                     handleClick={() => navigate('/app/library/create')}
                 />
             </div>
-            {libraries.length > 0 &&
-                libraries.map((library) => (
-                    <LibraryCard library={library} key={library.id} />
-                ))}
-        </div>
+            <div className={'columns-3'}>
+                {libraries.length > 0 &&
+                    libraries.map((library) => (
+                        <LibraryCard library={library} key={library.id} />
+                    ))}
+            </div>
+        </PageContainer>
     );
 }
 

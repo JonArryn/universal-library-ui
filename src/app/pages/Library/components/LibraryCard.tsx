@@ -1,14 +1,16 @@
 import { ILibrary } from '../LibraryPage.tsx';
 import StyledButton from '../../../../components/StyledButton.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface ILibraryCardProps {
     library: ILibrary;
 }
 
 function LibraryCard({ library }: ILibraryCardProps) {
+    const navigate = useNavigate();
     return (
         <div className="max-w-sm overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md">
-            <div className="flex items-center justify-between px-4 py-5 sm:px-6">
+            <div className="flex items-center justify-between gap-5 px-4 py-5 sm:px-6">
                 <div>
                     <h3 className="text-lg font-medium leading-6 text-gray-900">
                         {library.name}
@@ -18,7 +20,12 @@ function LibraryCard({ library }: ILibraryCardProps) {
                     </p>
                 </div>
                 <div>
-                    <StyledButton text={'Manage'} />
+                    <StyledButton
+                        text={'Manage'}
+                        handleClick={() =>
+                            navigate(`/app/library/${library.id}`)
+                        }
+                    />
                 </div>
             </div>
 

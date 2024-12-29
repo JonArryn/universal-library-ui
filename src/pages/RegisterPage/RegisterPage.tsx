@@ -12,7 +12,7 @@ function RegisterPage() {
             const active = await isSessionActive();
 
             if (active) {
-                navigate('/app');
+                navigate('/app/dashboard');
             }
         };
         checkAuth();
