@@ -11,7 +11,7 @@ function MyBooksList() {
         changeSort,
         changePage,
     } = useList(
-        '/api/book',
+        '/book',
         {
             id: { visible: false },
             title: { visible: true, displayName: 'Title' },

@@ -12,7 +12,7 @@ function MyLibrariesPage() {
     const navigate = useNavigate();
 
     const getLibraries = useCallback(async function () {
-        const response = await apiService.get('/api/library');
+        const response = await apiService.get('/library');
         setLibraries(response.data.data);
     }, []);
 

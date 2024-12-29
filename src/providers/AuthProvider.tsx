@@ -14,8 +14,10 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
     const [user, setUser] = useState<IUser | undefined>(undefined);
 
     const register = async function (formData: IRegisterUserData) {
-        await apiService.get('/sanctum/csrf-cookie');
-        const response = await apiService.post('/api/register', formData);
+        await apiService.get(
+            `${import.meta.env.VITE_SERVER_URL}/sanctum/csrf-cookie`
+        );
+        const response = await apiService.post('/register', formData);
         const registerResponseData: IApiOkResponse = response.data;
         if (registerResponseData.status === 201) {
             setIsAuthenticated(true);
@@ -27,8 +29,10 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
     const login = async function (
         credentials: ICredentials
     ): Promise<IApiOkResponse> {
-        await apiService.get('/sanctum/csrf-cookie');
-        const response = await apiService.post('/api/login', credentials);
+        await apiService.get(
+            `${import.meta.env.VITE_SERVER_URL}/sanctum/csrf-cookie`
+        );
+        const response = await apiService.post('/login', credentials);
         const loginResponseData: IApiOkResponse = response.data;
         if (loginResponseData.status === 200) {
             setIsAuthenticated(true);
@@ -38,7 +42,7 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
     };
 
     const logout = async function () {
-        await apiService.post('/api/logout');
+        await apiService.post('/logout');
         setIsAuthenticated(false);
         setUser(undefined);
     };
@@ -62,7 +66,7 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
 
     const getUser = async function () {
         try {
-            const userResponse = await apiService.get('/api/user');
+            const userResponse = await apiService.get('/user');
             const userData: IUser = userResponse.data;
             return userData;
         } catch (error: unknown) {
