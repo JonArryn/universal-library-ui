@@ -4,12 +4,13 @@ import MobileMenuButton from './components/MobileMenuButton.tsx';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth.ts';
 import { CgProfile } from 'react-icons/cg';
-import NavigationLink from './components/NavigationLink.tsx';
+import SubNavigationLink from './components/SubNavigationLink.tsx';
 import StyledButton from '../StyledButton.tsx';
 import ProfileDropdown from './components/ProfileDropdown.tsx';
 import { useEffect, useRef, useState } from 'react';
 import { publicAccountNavItems, INavItem } from '../../Constants/navItems.ts';
 import DarkModeToggle from '../DarkModeToggle.tsx';
+import MainNavigationLink from './components/MainNavigationLink.tsx';
 
 interface ITopNavProps {
     mainNavItems: INavItem[];
@@ -51,7 +52,7 @@ const TopNav = ({ mainNavItems }: ITopNavProps) => {
         return (
             <div className="flex gap-3">
                 {publicAccountNavItems.map((item) => (
-                    <NavigationLink
+                    <SubNavigationLink
                         path={item.route}
                         text={item.navText}
                         key={item.route}
@@ -67,7 +68,7 @@ const TopNav = ({ mainNavItems }: ITopNavProps) => {
                 <StyledButton
                     text={'Dashboard'}
                     style={'secondary'}
-                    handleClick={() => navigate('/app')}
+                    handleClick={() => navigate('/app/dashboard')}
                 />
                 <div>
                     <StyledButton
@@ -97,7 +98,7 @@ const TopNav = ({ mainNavItems }: ITopNavProps) => {
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-baseline space-x-4">
                                     {mainNavItems.map((item) => (
-                                        <NavigationLink
+                                        <MainNavigationLink
                                             path={item.route}
                                             text={item.navText}
                                             key={item.route}

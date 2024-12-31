@@ -5,7 +5,7 @@ interface IProps {
     text: string;
 }
 
-function NavigationLink({ path, text }: IProps) {
+function SubNavigationLink({ path, text }: IProps) {
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const defaultClasses: string =
@@ -28,4 +28,4 @@ function NavigationLink({ path, text }: IProps) {
     );
 }
 
-export default NavigationLink;
+export default SubNavigationLink;

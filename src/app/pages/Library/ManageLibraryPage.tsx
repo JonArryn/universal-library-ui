@@ -6,6 +6,7 @@ import PageHeading from '../../../components/PageHeading.tsx';
 import { useCallback, useEffect, useState } from 'react';
 import apiService from '../../../api/apiService.ts';
 import { ILibrary } from '../../types/entityTypes.ts';
+import { useNavigate } from 'react-router-dom';
 
 function ManageLibraryPage() {
     const [library, setLibrary] = useState<ILibrary>({
@@ -14,6 +15,7 @@ function ManageLibraryPage() {
         userId: 0,
     });
 
+    const navigate = useNavigate();
     const params = useParams();
     const {
         listHeaders,
@@ -54,7 +56,11 @@ function ManageLibraryPage() {
                 ]}
                 primaryButton={{
                     text: '+ New Book',
-                    handleClick: function () {},
+                    handleClick: function () {
+                        navigate(
+                            `/app/library/${params.libraryId}/book/create`
+                        );
+                    },
                 }}
             />
             <PageContainer>

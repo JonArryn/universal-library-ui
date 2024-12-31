@@ -16,6 +16,7 @@ import MyLibrariesPage from './app/pages/Library/MyLibrariesPage.tsx';
 import BookPage from './app/pages/Book/BookPage.tsx';
 import MyBooksList from './app/pages/Book/MyBooksList.tsx';
 import ManageLibraryPage from './app/pages/Library/ManageLibraryPage.tsx';
+import NewLibraryBookPage from './app/pages/Library/NewLibraryBookPage.tsx';
 
 const router = createBrowserRouter([
     {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
                     {
                         path: '/app/library/:libraryId',
                         element: <ManageLibraryPage />,
+                    },
+                    {
+                        path: '/app/library/:libraryId/book/create',
+                        element: <NewLibraryBookPage />,
                     },
                 ],
             },

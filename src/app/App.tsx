@@ -28,7 +28,9 @@ const App = function () {
 
                 <div>
                     {isAuthenticated ? (
-                        <Outlet />
+                        <>
+                            <Outlet />
+                        </>
                     ) : (
                         <Navigate to="/login" replace />
                     )}

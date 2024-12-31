@@ -1,4 +1,4 @@
-import NavigationLink from './TopNav/components/NavigationLink.tsx';
+import SubNavigationLink from './TopNav/components/SubNavigationLink.tsx';
 import { INavItem } from '../Constants/navItems.ts';
 import StyledButton from './StyledButton.tsx';
 
@@ -26,14 +26,14 @@ const PageHeading = ({
                     <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-slate-100">
                         {headingTitle}
                     </h1>
-                    <div className={'ml-6 flex'}>
+                    <div className={'ml-6 flex gap-5'}>
                         {menuItems &&
                             menuItems.map((navItem, index) => (
                                 <div
                                     className={`${navItem.hidden && 'hidden'}`}
                                     key={index * -1}
                                 >
-                                    <NavigationLink
+                                    <SubNavigationLink
                                         path={navItem.route}
                                         text={navItem.navText}
                                     />

@@ -21,7 +21,6 @@ export interface IRegisterUserData extends FormInputs {
 function RegisterForm() {
     const methods = useForm<IRegisterUserData>();
     const { handleFormError } = useFormError<IRegisterUserData>({
-        formData: methods.getValues(),
         setError: methods.setError,
     });
     const { register } = useAuth();
