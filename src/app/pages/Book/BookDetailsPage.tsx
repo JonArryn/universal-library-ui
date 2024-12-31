@@ -49,7 +49,7 @@ function BookDetailsPage() {
             <PageHeading headingTitle={'Book Details'} />
             <PageContainer>
                 <div className={'mx-auto w-1/2'}>
-                    <div className="overflow-hidden bg-white shadow sm:rounded-lg dark:bg-gray-800">
+                    <div className="overflow-hidden bg-white shadow sm:rounded-lg dark:bg-gray-800 dark:shadow-lg dark:shadow-black">
                         <div className="flex justify-between px-4 py-6 sm:px-6">
                             <h3 className="text-base/7 font-semibold text-gray-900 dark:text-slate-50">
                                 {bookDetails
