@@ -6,6 +6,7 @@ import {
     ISortRecord,
 } from '../../hooks/useList.ts';
 import { HiChevronDown, HiChevronUp } from 'react-icons/hi2';
+import { Link } from 'react-router-dom';
 
 export interface ITableHeader {
     field: string;
@@ -20,6 +21,7 @@ interface ITableListProps {
     sortField?: ISortRecord | undefined;
     pagination?: IListPagination;
     includeColumns?: IIncludeFields;
+    detailsRoute: { route: string; parameter: string };
     changePage: (arg0: number) => void;
     changeSort: (arg0: string) => void;
 }
@@ -30,6 +32,7 @@ function ListTable({
     sortField,
     listRows,
     listHeaders,
+    detailsRoute,
     pagination,
     changePage,
     changeSort,
@@ -77,7 +80,7 @@ function ListTable({
             <tr key={`row-${rowIndex}`}>
                 {Object.entries(row).map(([key, value]) => (
                     <td
-                        className="w-1/3 whitespace-nowrap text-sm font-medium text-gray-900 sm:pl-6 dark:text-slate-50"
+                        className="w-1/3 whitespace-nowrap text-sm font-medium sm:pl-6 dark:text-slate-50"
                         hidden={!rowKeys.includes(key)}
                         key={key}
                     >
@@ -86,8 +89,15 @@ function ListTable({
                             : '-'}
                     </td>
                 ))}
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 dark:text-slate-50">
-                    Edit
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-blue-600 hover:text-blue-400 sm:pl-6 dark:text-cyan-400">
+                    <Link
+                        to={detailsRoute?.route.replace(
+                            detailsRoute?.parameter,
+                            row[detailsRoute?.parameter]
+                        )}
+                    >
+                        Details
+                    </Link>
                 </td>
             </tr>
         ));

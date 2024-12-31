@@ -11,6 +11,7 @@ import SearchForm from '../../../components/form/SearchForm.tsx';
 
 function ManageLibraryPage() {
     const [library, setLibrary] = useState<ILibrary>({
+        type: 'library',
         id: 0,
         name: 'Library',
         userId: 0,
@@ -71,6 +72,7 @@ function ManageLibraryPage() {
                 <ListTable
                     title={`${library.name} Books`}
                     listHeaders={listHeaders}
+                    detailsRoute={{ route: '/app/book/id', parameter: 'id' }}
                     changePage={changePage}
                     changeSort={changeSort}
                     pagination={pagination}
