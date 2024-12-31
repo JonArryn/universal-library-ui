@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from 'react';
 import apiService from '../../../api/apiService.ts';
 import { ILibrary } from '../../types/entityTypes.ts';
 import { useNavigate } from 'react-router-dom';
+import SearchForm from '../../../components/form/SearchForm.tsx';
 
 function ManageLibraryPage() {
     const [library, setLibrary] = useState<ILibrary>({
@@ -22,6 +23,7 @@ function ManageLibraryPage() {
         listRows,
         pagination,
         sortField,
+        searchList,
         changeSort,
         changePage,
     } = useList(
@@ -47,6 +49,7 @@ function ManageLibraryPage() {
     useEffect(() => {
         getLibraryData();
     }, [getLibraryData]);
+
     return (
         <>
             <PageHeading
@@ -64,6 +67,7 @@ function ManageLibraryPage() {
                 }}
             />
             <PageContainer>
+                <SearchForm handleSearch={searchList} />
                 <ListTable
                     title={`${library.name} Books`}
                     listHeaders={listHeaders}

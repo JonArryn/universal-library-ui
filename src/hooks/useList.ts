@@ -51,6 +51,7 @@ function useList(
     const [sortField, setSortField] = useState<ISortRecord>(defaultSort);
     const [pagination, setPagination] = useState<IListPagination | undefined>();
     const [resultsPage, setResultsPage] = useState<number>(1);
+    const [search, setSearch] = useState<string>('');
 
     const generateSortString = useCallback(
         function () {
@@ -76,9 +77,10 @@ function useList(
             const fieldsString = fields ? '?fields=' + fields?.join(',') : '';
             const sortString = generateSortString();
             const pageString = resultsPage ? `&page=${resultsPage}` : '';
-            return `${endpoint}${fieldsString}${includeString}${sortString}${pageString}`;
+            const searchString = search ? `&search=${search}` : '';
+            return `${endpoint}${fieldsString}${includeString}${sortString}${searchString}${pageString}`;
         },
-        [generateSortString, resultsPage, endpoint]
+        [generateSortString, resultsPage, search, endpoint]
     );
 
     const getListData = useCallback(
@@ -174,6 +176,10 @@ function useList(
         setResultsPage(newPage);
     };
 
+    const searchList = async function (searchValue: string) {
+        setSearch(searchValue);
+    };
+
     useEffect(() => {
         getListData();
         createListHeaderData();
@@ -184,6 +190,8 @@ function useList(
         listHeaders,
         pagination,
         sortField,
+        search,
+        searchList,
         changeSort,
         changePage,
     };
