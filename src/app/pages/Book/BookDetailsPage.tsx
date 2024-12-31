@@ -28,8 +28,10 @@ function BookDetailsPage() {
         description: string;
     }) => (
         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-900">{title}</dt>
-            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <dt className="text-sm font-medium text-gray-900 dark:text-slate-50">
+                {title}
+            </dt>
+            <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-slate-100">
                 {description}
             </dd>
         </div>
@@ -47,9 +49,9 @@ function BookDetailsPage() {
             <PageHeading headingTitle={'Book Details'} />
             <PageContainer>
                 <div className={'mx-auto w-1/2'}>
-                    <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+                    <div className="overflow-hidden bg-white shadow sm:rounded-lg dark:bg-gray-800">
                         <div className="flex justify-between px-4 py-6 sm:px-6">
-                            <h3 className="text-base/7 font-semibold text-gray-900">
+                            <h3 className="text-base/7 font-semibold text-gray-900 dark:text-slate-50">
                                 {bookDetails
                                     ? bookDetails.title
                                     : 'Book Details'}
