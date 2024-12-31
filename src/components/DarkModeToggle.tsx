@@ -41,9 +41,7 @@ const DarkModeToggle = () => {
     };
 
     return (
-        <div
-            className={`flex justify-center gap-2 text-lg ${isDarkMode && 'text-slate-50'}`}
-        >
+        <div className={`flex justify-center gap-2 text-lg text-slate-50`}>
             {isDarkMode ? <DarkModeToggle /> : <LightToggle />}
         </div>
     );
