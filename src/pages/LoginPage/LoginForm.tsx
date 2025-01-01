@@ -27,8 +27,8 @@ const LoginForm = () => {
         } catch (error: unknown) {
             if (error instanceof AxiosError) {
                 if (error.status && error.status >= 400 && error.status < 500) {
-                    methods.setError('generic', {
-                        message: 'Could not log in.',
+                    methods.setError('password', {
+                        message: error.response?.data.message,
                     });
                 }
             }
@@ -54,8 +54,6 @@ const LoginForm = () => {
                         label={'Password'}
                         type={'password'}
                         required={true}
-                        subText={'Forgot Password?'}
-                        subTextRoute={'/forgot-password'}
                     />
                     <FormSubmitButton submitButtonText={'Sign In'} />
                 </FormWrapper>
