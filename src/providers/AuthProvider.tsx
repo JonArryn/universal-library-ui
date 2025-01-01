@@ -67,7 +67,8 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
 
     const getUser = async function () {
         try {
-            const userResponse = await apiService.get('/user');
+            const userResponse = await apiService.get(`/user`);
+            console.log(userResponse);
             const userData: IUser = userResponse.data;
             return userData;
         } catch (error: unknown) {
