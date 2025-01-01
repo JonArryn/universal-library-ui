@@ -11,6 +11,8 @@ import apiService from '../../../api/apiService.ts';
 import { useNavigate, useParams } from 'react-router-dom';
 import SelectOptionFormGroup from '../../../components/form/SelectOptionFormGroup.tsx';
 import PageHeading from '../../../components/PageHeading.tsx';
+import { useEffect, useState } from 'react';
+import { ILibrary } from '../../types/entityTypes.ts';
 
 interface ICreateLibraryBook extends FormInputs {
     title: string;
@@ -20,6 +22,8 @@ interface ICreateLibraryBook extends FormInputs {
 }
 
 function NewLibraryBookPage() {
+    const [library, setLibrary] = useState<ILibrary | undefined>();
+
     const navigate = useNavigate();
     const params = useParams();
     const methods = useForm<ICreateLibraryBook>();
@@ -45,10 +49,19 @@ function NewLibraryBookPage() {
         }
     };
 
+    const getLibrary = async function () {
+        const response = await apiService.get(`/library/${params.libraryId}`);
+        setLibrary(response.data.data);
+    };
+
+    useEffect(() => {
+        getLibrary();
+    }, []);
+
     return (
         <>
             <PageHeading
-                headingTitle={'Arryn Library'}
+                headingTitle={`${library?.name}`}
                 menuItems={[
                     {
                         navText: '<- Back to Library',

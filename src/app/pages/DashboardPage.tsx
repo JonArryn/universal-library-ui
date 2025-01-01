@@ -24,7 +24,7 @@ const DashboardPage = () => {
     }, []);
     return (
         <PageContainer>
-            <div className="mx-auto w-1/2 rounded-2xl">
+            <div className="mx-auto w-1/2">
                 <div className="mx-auto max-w-7xl">
                     <div className="rounded-xl bg-gray-50 py-10 shadow-md dark:bg-gray-900 dark:shadow-lg dark:shadow-black">
                         <div className="px-4 sm:px-6 lg:px-8">
@@ -47,13 +47,13 @@ const DashboardPage = () => {
                                                 <tr>
                                                     <th
                                                         scope="col"
-                                                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-0"
+                                                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-0 dark:text-slate-50"
                                                     >
                                                         Library Name
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        className="px-3 py-3.5 text-left text-sm font-semibold"
+                                                        className="px-3 py-3.5 text-left text-sm font-semibold dark:text-slate-50"
                                                     >
                                                         Book Count
                                                     </th>
@@ -62,10 +62,10 @@ const DashboardPage = () => {
                                             <tbody className="divide-y divide-gray-800">
                                                 {libraries?.map((library) => (
                                                     <tr key={library.id}>
-                                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-0">
+                                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-0 dark:text-slate-100">
                                                             {library.name}
                                                         </td>
-                                                        <td className="whitespace-nowrap px-3 py-4 text-sm">
+                                                        <td className="whitespace-nowrap px-3 py-4 text-sm dark:text-slate-100">
                                                             {
                                                                 library.books_count
                                                             }
