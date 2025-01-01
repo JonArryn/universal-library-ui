@@ -48,8 +48,8 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
     };
 
     const isSessionActive = async function (): Promise<boolean> {
-        const user = await getUser();
-        if (!user) {
+        const tryUser = await getUser();
+        if (!tryUser) {
             setIsAuthenticated(false);
             setUser(undefined);
             return false;
@@ -58,7 +58,7 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
                 setIsAuthenticated(true);
             }
             if (!user) {
-                setUser(user);
+                setUser(tryUser);
             }
             return true;
         }
