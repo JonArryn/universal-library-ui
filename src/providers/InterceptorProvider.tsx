@@ -13,6 +13,7 @@ function InterceptorProvider({ children }: IInterceptorProviderProps) {
     useEffect(() => {
         apiService.interceptors.response.use(
             async function (response) {
+                console.log(response);
                 return response;
             },
             function async(error) {

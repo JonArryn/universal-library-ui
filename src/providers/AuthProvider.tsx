@@ -49,6 +49,7 @@ const AuthProvider = function ({ children }: IAuthProviderProps) {
 
     const isSessionActive = async function (): Promise<boolean> {
         const tryUser = await getUser();
+        console.log(tryUser);
         if (!tryUser) {
             setIsAuthenticated(false);
             setUser(undefined);
