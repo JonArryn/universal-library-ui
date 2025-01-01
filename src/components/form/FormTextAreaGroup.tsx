@@ -3,7 +3,7 @@ import FormError from './FormError.tsx';
 
 type InputTypes = 'text' | 'email' | 'password' | 'tel' | 'textarea';
 
-interface IFormInputProps {
+interface IFormTextAreaProps {
     name: string;
     label: string;
     type: InputTypes;
@@ -14,18 +14,16 @@ interface IFormInputProps {
     defaultValue?: string;
 }
 
-function FormTextInputGroup({
+function FormTextAreaGroup({
     name,
     label,
     defaultValue = '',
-    type = 'text',
     required = false,
     placeholder = '',
     subText = '',
     subTextRoute = '',
-}: IFormInputProps) {
+}: IFormTextAreaProps) {
     const { register } = useFormContext(); // Access form context
-
     const SubTextField = function () {
         return (
             <p className="font-semibold text-indigo-600 hover:text-indigo-500">
@@ -58,14 +56,12 @@ function FormTextInputGroup({
             </div>
 
             <div className="mt-2">
-                <input
+                <textarea
                     id={name}
-                    type={type}
                     placeholder={placeholder}
                     defaultValue={defaultValue}
                     {...register(name, { required: required })}
                     className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
-                    // onChange={() => clearErrors('generic')}
                 />
             </div>
             <div className="mt-2 text-sm">
@@ -75,4 +71,4 @@ function FormTextInputGroup({
     );
 }
 
-export default FormTextInputGroup;
+export default FormTextAreaGroup;

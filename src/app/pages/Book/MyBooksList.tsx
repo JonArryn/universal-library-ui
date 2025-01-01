@@ -2,6 +2,7 @@ import PageContainer from '../../../components/layout/PageContainer.tsx';
 import ListTable from '../../../components/layout/ListTable.tsx';
 import useList from '../../../hooks/useList.ts';
 import PageHeading from '../../../components/PageHeading.tsx';
+import SearchForm from '../../../components/form/SearchForm.tsx';
 
 function MyBooksList() {
     const {
@@ -9,6 +10,7 @@ function MyBooksList() {
         listRows,
         pagination,
         sortField,
+        searchList,
         changeSort,
         changePage,
     } = useList(
@@ -36,6 +38,7 @@ function MyBooksList() {
                 }}
             />
             <PageContainer>
+                <SearchForm handleSearch={searchList} />
                 <ListTable
                     title={'Books'}
                     description={
@@ -43,6 +46,7 @@ function MyBooksList() {
                     }
                     listRows={listRows && listRows}
                     listHeaders={listHeaders}
+                    detailsRoute={{ route: '/app/book/id', parameter: 'id' }}
                     pagination={pagination}
                     changePage={changePage}
                     changeSort={changeSort}

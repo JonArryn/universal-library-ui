@@ -33,19 +33,13 @@ function SelectOptionFormGroup({
 }: ISelectOptionFormGroupProps) {
     const [options, setOptions] = useState<[] | undefined>();
 
-    const { register, ...rest } = useFormContext(); // Access form context
+    const { register, setValue, ...rest } = useFormContext(); // Access form context
     const getOptions = useCallback(
         async function () {
             const response = await apiService.get(`${optionEndpoint}`);
-
+            setOptions(response.data.data);
             if (preSelectedId) {
-                const option = response.data.data.filter(
-                    (item: IApiRecord) => item.id == preSelectedId
-                );
-
-                setOptions(option);
-            } else {
-                setOptions(response.data.data);
+                setValue(name, preSelectedId);
             }
         },
         [optionEndpoint, preSelectedId]
@@ -54,6 +48,12 @@ function SelectOptionFormGroup({
     useEffect(() => {
         getOptions();
     }, [getOptions]);
+
+    useEffect(() => {
+        if (preSelectedId) {
+            setValue(name, preSelectedId);
+        }
+    }, [options]);
 
     const SubTextField = function () {
         return (

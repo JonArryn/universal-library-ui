@@ -72,6 +72,7 @@ function ManageLibraryPage() {
                 <ListTable
                     title={`${library.name} Books`}
                     listHeaders={listHeaders}
+                    description={`A list of books in ${library.name}`}
                     detailsRoute={{ route: '/app/book/id', parameter: 'id' }}
                     changePage={changePage}
                     changeSort={changeSort}
