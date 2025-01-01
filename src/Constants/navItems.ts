@@ -15,8 +15,6 @@ const publicAccountNavItems: INavItem[] = [
 ];
 
 const profileDropdownItems: INavItem[] = [
-    { navText: 'My Account', route: '/#' },
-    { navText: 'Settings', route: '/#' },
     { navText: 'Log Out', route: '/logout' },
 ];
 

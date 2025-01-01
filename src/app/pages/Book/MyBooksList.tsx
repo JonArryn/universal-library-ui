@@ -30,13 +30,7 @@ function MyBooksList() {
     );
     return (
         <>
-            <PageHeading
-                headingTitle={'My Books'}
-                primaryButton={{
-                    text: '+ New Book',
-                    handleClick: function () {},
-                }}
-            />
+            <PageHeading headingTitle={'My Books'} />
             <PageContainer>
                 <SearchForm handleSearch={searchList} />
                 <ListTable

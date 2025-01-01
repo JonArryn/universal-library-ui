@@ -1,6 +1,6 @@
-import { ILibrary } from '../LibraryPage.tsx';
 import StyledButton from '../../../../components/StyledButton.tsx';
 import { useNavigate } from 'react-router-dom';
+import { ILibrary } from '../../../types/entityTypes.ts';
 
 interface ILibraryCardProps {
     library: ILibrary;
@@ -28,20 +28,20 @@ function LibraryCard({ library }: ILibraryCardProps) {
 
             <div className="border-t border-gray-200">
                 <dl>
-                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 dark:bg-slate-600">
-                        <dt className="text-sm font-medium text-gray-500 dark:text-slate-50">
-                            Owner
-                        </dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-slate-100">
-                            Library User
-                        </dd>
-                    </div>
                     <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 dark:bg-slate-700">
                         <dt className="text-sm font-medium text-gray-500 dark:text-slate-50">
-                            Created
+                            Last Updated
                         </dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-slate-100">
-                            Created At Date
+                            {library.updated_at}
+                        </dd>
+                    </div>
+                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 dark:bg-slate-600">
+                        <dt className="text-sm font-medium text-gray-500 dark:text-slate-50">
+                            Created Date
+                        </dt>
+                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-slate-100">
+                            {library.created_at}
                         </dd>
                     </div>
                 </dl>

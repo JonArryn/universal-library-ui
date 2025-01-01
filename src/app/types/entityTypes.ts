@@ -17,4 +17,6 @@ export interface ILibrary {
     id: number;
     name: string;
     userId: number;
+    created_at: string;
+    updated_at: string;
 }
