@@ -3,9 +3,9 @@ import ContentHeading from '../../../components/typography/ContentHeading.tsx';
 import StyledButton from '../../../components/StyledButton.tsx';
 import LibraryCard from './components/LibraryCard.tsx';
 import { useNavigate } from 'react-router-dom';
-import { ILibrary } from './LibraryPage.tsx';
 import apiService from '../../../api/apiService.ts';
 import PageContainer from '../../../components/layout/PageContainer.tsx';
+import { ILibrary } from '../../types/entityTypes.ts';
 
 function MyLibrariesPage() {
     const [libraries, setLibraries] = useState<[] | ILibrary[]>([]);

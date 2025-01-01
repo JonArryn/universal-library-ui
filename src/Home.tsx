@@ -30,7 +30,7 @@ function Home() {
         <>
             <div className="min-h-full">
                 <TopNav mainNavItems={navItems} />
-                <PageHeading />
+                <PageHeading headingTitle={'Universal Library'} />
                 <main>
                     <div>
                         <Outlet />

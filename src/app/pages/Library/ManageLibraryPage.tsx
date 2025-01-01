@@ -15,6 +15,8 @@ function ManageLibraryPage() {
         id: 0,
         name: 'Library',
         userId: 0,
+        created_at: '',
+        updated_at: '',
     });
 
     const navigate = useNavigate();
